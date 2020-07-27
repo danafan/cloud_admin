@@ -19,7 +19,7 @@
     created(){
       let tab = sessionStorage.getItem("tab");
       if(!tab || tab == '/'){
-        this.$router.push('/index')
+        this.$router.push('/trade_order')
       }
     },
     methods: {

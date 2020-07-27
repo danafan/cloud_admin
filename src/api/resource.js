@@ -59,6 +59,10 @@ let path = {
 	getNotice:'message/getnotice',									//公告详情
 	createNotice:'message/createnotice',							//创建公告
 	getConfig:'config/getconfig',									//系统基础配置
+	ervicesubject:'servicesubject/list',								//综合服务主体列表
+	servicesubject:'servicesubject/getdetail',						//获取综合服务主体详情
+	servicesubjectAdd:'servicesubject/add',							//创建综合服务主体
+	servicesubjectEdit:'servicesubject/edit',						//编辑综合服务主体
 	editServicerate:'config/editservicerate',						//编辑服务费计费模式
 	editmoneylimit:'config/editmoneylimit',							//编辑限额信息
 	adminIndex:'admin/index',										//管理员列表
@@ -329,6 +333,22 @@ export default{
 	//系统基础配置
 	getConfig(params){
 		return http.get(path.getConfig, params)
+	},
+	//综合服务主体列表
+	ervicesubject(params){
+		return http.get(path.ervicesubject, params)
+	},
+	//综合服务主体详情
+	servicesubject(params){
+		return http.get(path.servicesubject, params)
+	},
+	//创建综合服务主体
+	servicesubjectAdd(params){
+		return http.post(path.servicesubjectAdd, params)
+	},
+	//编辑综合服务主体
+	servicesubjectEdit(params){
+		return http.post(path.servicesubjectEdit, params)
 	},
 	//编辑服务费计费模式
 	editServicerate(params){

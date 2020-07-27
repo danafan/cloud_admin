@@ -4,14 +4,15 @@ import md5 from 'js-md5';
 export default {
   post(path, params={}){
     let target = {};
-    let admin_id = localStorage.getItem("admin_id");
-    let secret_key = localStorage.getItem("secret_key");
-    let login_token = localStorage.getItem("token");
+    let admin_id = localStorage.getItem("admin_admin_id");
+    let secret_key = localStorage.getItem("admin_secret_key");
+    let login_token = localStorage.getItem("admin_token");
     let timestamp = ((new Date()).getTime()/1000).toString().split('.')[0];
     if(!!admin_id){
       target.admin_id = admin_id;
       target.login_token = login_token;
       target.timestamp = timestamp;
+      target.random = Math.random();
     }
     Object.assign(params, target);
     let form = new FormData();
@@ -48,6 +49,7 @@ export default {
       target.admin_id = admin_id;
       target.login_token = login_token;
       target.timestamp = timestamp;
+      target.random = Math.random();
     }
     Object.assign(params, target);
     let arr = [];

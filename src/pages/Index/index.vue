@@ -2,15 +2,15 @@
 	<div>
 		<div class="tabs">
 			<div class="tab_item">
-				<img class="tab_icon" src="../../assets/index_top_up.png">
+				<img class="tab_icon" :src="qn_url + 'index_top_up.png'">
 				<div class="tab_txt">账户充值</div>
 			</div>
 			<div class="tab_item">
-				<img class="tab_icon" src="../../assets/index_send_money.png">
+				<img class="tab_icon" :src="qn_url + 'index_send_money.png'">
 				<div class="tab_txt">批量打款</div>
 			</div>
 			<div class="tab_item">
-				<img class="tab_icon" src="../../assets/index_ apply.png">
+				<img class="tab_icon" :src="qn_url + 'index_apply.png'">
 				<div class="tab_txt">发票申请</div>
 			</div>
 		</div>

@@ -26,6 +26,7 @@ const deductions_record = resolve=>require(['@/pages/Tax/deductions_record'],res
 const correspondence = resolve=>require(['@/pages/Message/correspondence'],resolve)
 const system = resolve=>require(['@/pages/Message/system'],resolve)
 const basic_set = resolve=>require(['@/pages/System/basic_set'],resolve)
+const ervice_subject = resolve=>require(['@/pages/System/ervice_subject'],resolve)
 const account_pre = resolve=>require(['@/pages/Permissions/account_pre'],resolve)
 const management = resolve=>require(['@/pages/Permissions/management'],resolve)
 Vue.use(Router)
@@ -63,6 +64,7 @@ const router = new Router({
     { path: '/correspondence',name:"消息管理/函件通知", component: correspondence},
     { path: '/system',name:"消息管理/系统公告", component: system},
     { path: '/basic_set',name:"系统设置/基本设置", component: basic_set},
+    { path: '/ervice_subject',name:"系统设置/综合服务主体", component: ervice_subject},
     { path: '/account_pre',name:"权限管理/账号管理", component: account_pre},
     { path: '/management',name:"权限管理/权限管理", component: management},
     ]

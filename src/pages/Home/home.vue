@@ -93,6 +93,7 @@
 					</template>
 					<el-menu-item-group>
 						<el-menu-item index="/basic_set">基本设置</el-menu-item>
+						<el-menu-item index="/ervice_subject">综合服务主体</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>
 				<el-submenu index="11">
@@ -201,7 +202,7 @@
 			}
 		},
 		created(){
-			this.admin_name = localStorage.getItem("admin_name");
+			this.admin_name = localStorage.getItem("admin_admin_name");
 			let tab = sessionStorage.getItem("tab");
 			if(!tab){
 				this.activeIndex = '/index';

@@ -95,10 +95,6 @@
 			}
 		},
 		created(){
-			//获取所有菜单列表
-			this.getMneu();
-			//获取所有控制器列表
-			this.getController();
 			//获取列表
 			this.getList();
 		},
@@ -173,7 +169,11 @@
 					access_codes:""
 				};
 				this.accessCodes = [];
-			},
+				//获取所有菜单列表
+				this.getMneu();
+			//获取所有控制器列表
+			this.getController();
+		},
 			//点击某一个关闭
 			handleClose(index){
 				this.accessCodes.splice(index,1);
@@ -229,6 +229,8 @@
 						}
 					}
 					this.accessCodes.push(str);
+					this.selController = "";
+					this.selMethod = "";
 				}
 			},
 			//点击弹框的确定
@@ -237,9 +239,16 @@
 					this.$message.warning("请输入权限资源名称");
 				}else if(this.accessReq.menu_id == ''){
 					this.$message.warning("请选择所属菜单");
-				}else if(this.accessCodes.length == 0){
-					this.$message.warning("请选择权限码");
 				}else{
+					if(this.accessCodes.length == 0){
+						if(this.selController == "" || this.selMethod == ""){
+							this.$message.warning("请选择权限码");
+							return;
+						}else{
+							let str = this.selController + "/" + this.selMethod;
+							this.accessCodes.push(str);
+						}
+					}
 					this.accessReq.access_codes = JSON.stringify(this.accessCodes);
 					if(this.dislogType == 1){
 						resource.addaccess(this.accessReq).then(res => {
