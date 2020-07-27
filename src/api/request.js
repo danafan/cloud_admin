@@ -4,12 +4,12 @@ import md5 from 'js-md5';
 export default {
   post(path, params={}){
     let target = {};
-    let user_id = localStorage.getItem("user_id");
+    let admin_id = localStorage.getItem("admin_id");
     let secret_key = localStorage.getItem("secret_key");
     let login_token = localStorage.getItem("token");
     let timestamp = ((new Date()).getTime()/1000).toString().split('.')[0];
-    if(!!user_id){
-      target.admin_id = user_id;
+    if(!!admin_id){
+      target.admin_id = admin_id;
       target.login_token = login_token;
       target.timestamp = timestamp;
     }
@@ -40,12 +40,12 @@ export default {
    },
    get(path, params={}){
     let target = {};
-    let user_id = localStorage.getItem("user_id");
+    let admin_id = localStorage.getItem("admin_id");
     let secret_key = localStorage.getItem("secret_key");
     let login_token = localStorage.getItem("token");
     let timestamp = ((new Date()).getTime()/1000).toString().split('.')[0];
-    if(!!user_id){
-      target.admin_id = user_id;
+    if(!!admin_id){
+      target.admin_id = admin_id;
       target.login_token = login_token;
       target.timestamp = timestamp;
     }

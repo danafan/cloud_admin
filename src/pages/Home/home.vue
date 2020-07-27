@@ -111,7 +111,7 @@
 			<el-header class="header">
 				<div class="breadcrumb">{{crumb}}</div>
 				<div class="user_set">
-					<div class="username">范玉龙</div>
+					<div class="username">{{admin_name}}</div>
 					<div class="line"></div>
 					<div class="tui" @click="exit">退出</div>
 				</div>
@@ -201,7 +201,7 @@
 			}
 		},
 		created(){
-			this.admin_name = sessionStorage.getItem("admin_name");
+			this.admin_name = localStorage.getItem("admin_name");
 			let tab = sessionStorage.getItem("tab");
 			if(!tab){
 				this.activeIndex = '/index';
@@ -256,7 +256,7 @@
 				}).then(() => {
 					resource.quit().then(res => {
 						if(res.data.code == 1){
-							sessionStorage.clear();
+							localStorage.clear();
 							this.$message.success(res.data.msg);
 							this.$router.push('/login');
 						}else{

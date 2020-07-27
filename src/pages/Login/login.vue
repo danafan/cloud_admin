@@ -20,7 +20,7 @@
 					<div class="toast" @click="getCode">看不清，换一张</div>
 				</div>
 			</div>
-			<div class="login_but">登录</div>
+			<div class="login_but" @click="login">登录</div>
 		</div>
 	</div>
 </template>
@@ -161,14 +161,17 @@
 					this.$message.warning("请输入账号");
 				}else if(this.request.password == ''){
 					this.$message.warning("请输入密码");
-				}else if(this.request.captcha == ''){
-					this.$message.warning("请输入验证码");
-				}else{
+				}
+				// else if(this.request.captcha == ''){
+				// 	this.$message.warning("请输入验证码");
+				// }
+				else{
 					resource.login(this.request).then(res => {
 						if(res.data.code == '1'){
 							localStorage.setItem("token",res.data.data.login_token);
 							localStorage.setItem("secret_key",res.data.data.secret_key);
-							localStorage.setItem("user_id",res.data.data.user_id);
+							localStorage.setItem("admin_id",res.data.data.admin_id);
+							localStorage.setItem("admin_name",res.data.data.admin_name);
 							this.$message.success("登录成功");
 							this.$router.push('/index');
 						}else{
