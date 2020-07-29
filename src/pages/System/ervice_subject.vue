@@ -57,7 +57,7 @@
 			<el-form-item label="经办人手机号：" label-width="220px" required>
 				<el-input v-model="detailObj.operator_phone" :disabled="type == '2'"></el-input>
 			</el-form-item>
-			<el-form-item label="上传文件：" required>
+			<el-form-item label="上传文件：" label-width="220px" required>
 				<div class="showimg" v-if="fileName != ''" @mouseenter="isDel = true" @mouseleave="isDel = false">
 					<div class="img">{{fileName}}</div>
 					<div class="modal" v-if="isDel == true">

@@ -178,11 +178,15 @@
 	.el-menu-item.is-active {
 		background:#008DFF !important;
 	}
+	.el-submenu__title{
+		background-color: #00152A !important;
+	}
 	.el-aside{
 		background:#00152A !important;
 	}
 	.el-menu{
 		border: none !important;	
+		background-color: #00152A !important;
 	}
 	.main{
 		background: #F0F2F5;

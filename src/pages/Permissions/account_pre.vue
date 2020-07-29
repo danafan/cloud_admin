@@ -86,7 +86,7 @@
 				<el-input type="textarea"
 				:rows="3" v-model="updateInfoReq.remark"></el-input>
 			</el-form-item>
-			<el-form-item :label="`${item.menu_name}：`" v-for="(item,index) in accessList" v-if="is_super != '1'">
+			<el-form-item :label="`${item.menu_name}：`" v-for="(item,index) in accessList" v-if="is_super != '1' || updateInfoType == '1'">
 				<el-checkbox-group v-model="checkedCities">
 					<el-checkbox :label="child.id" :key="child.id" :value="child.id" v-for="(child,index) in item.access">{{child.access_name}}</el-checkbox>
 				</el-checkbox-group>

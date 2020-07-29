@@ -25,7 +25,7 @@ let path = {
 	editInvoiceCategory:'invoicecategory/edit',					//编辑发票类目
 	createInvoice:'invoicecategory/add',						//新增发票类目
 	applyList:'invoice/applylist',								//发票记录列表
-	applyDetail:'invoice/applydetail',							//发票详情
+	applyDetail:'invoice/detail',								//发票详情
 	invoiceList:'invoice/invoicelist',							//已开发票列表
 	invoiceInput:'invoice/input',								//发票单号录入
 	userList:'user/userlist',									//签约用户列表
@@ -412,7 +412,7 @@ export default{
 	},
 	//权限修改
 	editaccess(params){
-		return http.post(path.addaccess, params)
+		return http.post(path.editaccess, params)
 	},
 }
 

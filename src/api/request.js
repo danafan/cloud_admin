@@ -30,7 +30,9 @@ export default {
     obj.secret_key = secret_key;
     let str = "";
     for(var i in obj){
-      str += `${i}=${obj[i]}&`
+      if(i != 'sign_protocol' && i != 'file'){
+        str += `${i}=${obj[i]}&`
+      }
     }
      //生成签名
      str=str.substring(0,str.length-1)
@@ -41,9 +43,9 @@ export default {
    },
    get(path, params={}){
     let target = {};
-    let admin_id = localStorage.getItem("admin_id");
-    let secret_key = localStorage.getItem("secret_key");
-    let login_token = localStorage.getItem("token");
+    let admin_id = localStorage.getItem("admin_admin_id");
+    let secret_key = localStorage.getItem("admin_secret_key");
+    let login_token = localStorage.getItem("admin_token");
     let timestamp = ((new Date()).getTime()/1000).toString().split('.')[0];
     if(!!admin_id){
       target.admin_id = admin_id;
@@ -60,7 +62,7 @@ export default {
     let arrSort = arr.sort();
     for(let b of arrSort){
       let val = params[b];
-      str += `${b}=${val}&`;
+        str += `${b}=${val}&`;
     }
     let secret = `secret_key=${secret_key}`;
     let sign = md5(str + secret);

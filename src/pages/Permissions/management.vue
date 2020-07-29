@@ -81,7 +81,7 @@
 					pagesize:10
 				},
 				dataObj:{},
-				dislogType:1,			//添加权限
+				dislogType:"1",			//添加权限
 				showDialog:false,		//默认弹框不显示
 				accessReq:{
 					access_name:"",
@@ -100,7 +100,7 @@
 		},
 		watch:{
 			selController:function(n,o){
-				if(n != o){
+				if(n != o && n != ''){
 					//获取所有控制器列表
 					this.getMethod();
 					this.selMethod = "";
@@ -161,19 +161,21 @@
 			},
 			//点击添加权限
 			addAccess(){
-				this.dislogType = 1;
+				this.dislogType = "1";
 				this.showDialog = true;
 				this.accessReq = {
 					access_name:"",
 					menu_id:"",
 					access_codes:""
 				};
+				this.selController = "";		//当前选择的控制器名称
+				this.selMethod = "";			//当前选择的方法名称
 				this.accessCodes = [];
 				//获取所有菜单列表
 				this.getMneu();
-			//获取所有控制器列表
-			this.getController();
-		},
+				//获取所有控制器列表
+				this.getController();
+			},
 			//点击某一个关闭
 			handleClose(index){
 				this.accessCodes.splice(index,1);
@@ -181,13 +183,19 @@
 			//点击编辑
 			edior(id){
 				this.id = id;
-				this.dislogType = 2;
+				this.dislogType = "2";
+				//获取所有菜单列表
+				this.getMneu();
+				//获取所有控制器列表
+				this.getController();
 				resource.getaccessinfo({id:id}).then(res => {
 					if(res.data.code == 1){
 						this.showDialog = true;
 						this.accessReq.access_name = res.data.data.access_name;
 						this.accessReq.menu_id = res.data.data.menu_id;
 						this.accessCodes = res.data.data.access_codes;
+						this.selController = "";		//当前选择的控制器名称
+						this.selMethod = "";			//当前选择的方法名称
 					}else{
 						this.$message.warning(res.data.msg);
 					}
@@ -229,8 +237,6 @@
 						}
 					}
 					this.accessCodes.push(str);
-					this.selController = "";
-					this.selMethod = "";
 				}
 			},
 			//点击弹框的确定
@@ -250,7 +256,7 @@
 						}
 					}
 					this.accessReq.access_codes = JSON.stringify(this.accessCodes);
-					if(this.dislogType == 1){
+					if(this.dislogType == "1"){
 						resource.addaccess(this.accessReq).then(res => {
 							if(res.data.code == 1){
 								this.$message.success(res.data.msg);
