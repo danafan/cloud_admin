@@ -190,6 +190,9 @@
 								</el-option>
 							</el-select>
 						</el-form-item>
+						<el-form-item label="手机号：" label-width="220px" required>
+							<el-input v-model="req.account_manager_phone"></el-input>
+						</el-form-item>
 						<el-form-item label="邮箱：" label-width="220px" required>
 							<el-input v-model="req.account_manager_email"></el-input>
 						</el-form-item>
@@ -416,6 +419,8 @@
 					this.$message.warning("请输入对公账号");
 				}else if(this.req.open_bank_name == ''){
 					this.$message.warning("请输入开户银行");
+				}else if(this.req.account_manager_phone == ''){
+					this.$message.warning("请输入手机号");
 				}else if(this.req.account_manager_email == ''){
 					this.$message.warning("请输入邮箱");
 				}else{

@@ -140,11 +140,14 @@
 					</el-form>
 					<div class="title">收款账户</div>
 					<el-form size="small" style="width: 100%">
-						<el-form-item label="开户银行：" label-width="220px" required>
+						<el-form-item label="银行名称：" label-width="220px" required>
 							<el-select v-model="addObj.bank_id">
 								<el-option v-for="item in bank_list" :key="item.bank_id" :label="item.bank_name" :value="item.bank_id">
 								</el-option>
 							</el-select>
+						</el-form-item>
+						<el-form-item label="开户银行：" label-width="220px" required>
+							<el-input v-model="addObj.bank_name"></el-input>
 						</el-form-item>
 						<el-form-item label="专属账户：" label-width="220px" required>
 							<el-input v-model="addObj.bank_no"></el-input>

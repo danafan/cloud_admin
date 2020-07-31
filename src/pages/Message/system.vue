@@ -104,8 +104,8 @@ width="30%">
 		watch:{
 			//时间
 			date:function(n){
-				this.req.created_time_start = n?n[0]:"";
-				this.req.created_time_end = n?n[1]:"";
+				this.req.created_time_start = n.length> 0?n[0]:"";
+				this.req.created_time_end = n.length> 0?n[1]:"";
 			}
 		},
 		methods:{

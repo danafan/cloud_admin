@@ -247,8 +247,8 @@
 		watch:{
 			//合同有效期
 			date:function(n){
-				this.req.contract_start_time = n?n[0]:"";
-				this.req.contract_end_time = n?n[1]:"";
+				this.req.contract_start_time = n.length> 0?n[0]:"";
+				this.req.contract_end_time = n.length> 0?n[1]:"";
 			}
 		},
 		props:{
@@ -274,12 +274,18 @@
 					if(res.data.code == 1){
 						this.showEdit = true;
 						let resData = res.data.data;
+						this.req = resData.info;
 						this.service_subject_list = resData.service_subject_list;
 						this.sign_list = resData.sign_list;
+						let obj = {
+							username:"",
+							identity_card:""
+						}
 						this.black_list = resData.black_list;
+						this.black_list.push(obj)
 						this.date.push(resData.info.contract_start_time);
 						this.date.push(resData.info.contract_end_time);
-						this.req = resData.info;
+						
 					}else{
 						this.$message.warning(res.data.msg);
 					}

@@ -169,8 +169,8 @@
 		watch:{
 			//入账时间
 			date:function(n){
-				this.req.happen_start_time = n?n[0]:"";
-				this.req.happen_end_time = n?n[1]:"";
+				this.req.happen_start_time = n.length> 0?n[0]:"";
+				this.req.happen_end_time = n.length> 0?n[1]:"";
 			}
 		},
 		methods:{

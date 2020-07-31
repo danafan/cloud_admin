@@ -41,10 +41,10 @@
 		<el-form size="small" style="width: 100%">
 			<el-form-item label="商户名称：" label-width="220px" required>
 				<el-checkbox-group v-model="checkList">
-					<el-checkbox :label="item.store_id" v-for="item in addObj.list" checked="item.check_status == '1'">{{item.store_name}}</el-checkbox>
+					<el-checkbox :label="item.store_id" v-for="item in addObj.list" :checked="item.check_status == '1'">{{item.store_name}}</el-checkbox>
 				</el-checkbox-group>
 			</el-form-item>
-			<el-form-item label="关联说明：" label-width="220px" required>
+			<el-form-item label="关联说明：" label-width="220px">
 				<el-input
 				type="textarea"
 				:rows="5"
@@ -99,6 +99,7 @@
 				addObj:{},
 				type:'1',				//1:创建；2:修改
 				checkList:[],			//选中的商户编号
+				relation_id:"",			//点击的商户id
 			}
 		},
 		created(){
@@ -142,6 +143,7 @@
 			//创建
 			create_store(){
 				this.type = '1';
+				this.checkList = [];
 				this.showEdit = true;
 				//获取可用的商户列表或者编辑关联商户
 				this.getUnrelationStore();
@@ -149,7 +151,9 @@
 			//编辑
 			edit(id){
 				this.type = '2';
+				this.checkList = [];
 				this.showEdit = true;
+				this.relation_id = id;
 				//获取可用的商户列表或者编辑关联商户
 				this.getUnrelationStore();
 			},
@@ -184,10 +188,8 @@
 			},
 			//提交
 			submit(){
-				if(this.checkList.length == 0){
-					this.$message.warning("请选择商户");
-				}else if(this.addObj.remark == ''){
-					this.$message.warning("请输入说明");
+				if(this.checkList.length < 2){
+					this.$message.warning("至少选择两个商户关联");
 				}else{
 					var req = {
 						store_ids:this.checkList.join(','),
@@ -205,6 +207,7 @@
 							}
 						})
 					}else{
+						req.relation_id = this.relation_id;
 						resource.editrelation(req).then(res => {
 							if(res.data.code == 1){
 								this.showEdit = false;

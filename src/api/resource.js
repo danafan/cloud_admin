@@ -50,6 +50,7 @@ let path = {
 	addrelation:'storerelation/addrelation',						//创建商户关联关系
 	editrelation:'storerelation/editrelation',						//编辑商户关联关系
 	delrelation:'storerelation/delrelation',						//删除商户关联关系
+	persionaltax:'persionaltax/index',								//个税扣缴明细
 	uploadtax:'persionaltax/uploadtax',								//上传个税扣缴明细
 	ajaxstorelist:'persionaltax/ajaxstorelist',						//获取商户列表
 	letterslist:'message/letterslist',								//函件通知列表
@@ -288,7 +289,7 @@ export default{
 	},
 	//创建商户关联关系
 	addrelation(params){
-		return http.post(path.relationlist, params)
+		return http.post(path.addrelation, params)
 	},
 	//编辑商户关联关系
 	editrelation(params){
@@ -298,13 +299,17 @@ export default{
 	delrelation(params){
 		return http.post(path.delrelation, params)
 	},
+	//个税扣缴明细
+	persionaltax(params){
+		return http.get(path.persionaltax, params)
+	},
 	//上传个税扣缴明细
 	uploadtax(params){
 		return http.post(path.uploadtax, params)
 	},
 	//获取商户列表
 	ajaxstorelist(params){
-		return http.get(path.uploadtax, params)
+		return http.get(path.ajaxstorelist, params)
 	},
 	//函件通知列表
 	letterslist(params){

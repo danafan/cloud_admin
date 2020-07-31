@@ -13,7 +13,7 @@
 			</el-date-picker>
 		</el-form-item>
 		<el-form-item label="资金用途：">
-			<el-select v-model="req.money_use" placeholder="不限" clearable>
+			<el-select v-model="req.purpose" placeholder="不限" clearable>
 				<el-option v-for="item in money_use_list" :key="item.id" :label="item.name" :value="item.id">
 				</el-option>
 			</el-select>
@@ -81,9 +81,6 @@
 				},{
 					id:"2",
 					name:"存入支付宝通道余额"
-				},{
-					id:"3",
-					name:"存入微信通道余额"
 				}],	//资金用途
 				dataObj:{},	
 				
@@ -102,8 +99,8 @@
 		watch:{
 			//入账时间
 			date:function(n){
-				this.req.finished_time_start = n?n[0]:"";
-				this.req.finished_time_end = n?n[1]:"";
+				this.req.finished_time_start = n.length> 0?n[0]:"";
+				this.req.finished_time_end = n.length> 0?n[1]:"";
 			}
 		},
 		methods:{

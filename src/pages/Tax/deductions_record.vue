@@ -20,7 +20,7 @@
 		<div class="but">
 			<el-button type="primary" size="small" @click="getList">搜索</el-button>
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
-			<el-button type="primary" size="small" @click="uploadFile">上传文件</el-button>
+			<el-button type="primary" size="small" @click="getStorelist">上传文件</el-button>
 		</div>
 		<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
 			<el-table-column width="150" prop="store_name" label="商户名称" align="center">
@@ -68,11 +68,12 @@
 			<el-date-picker
 			v-model="reqObj.tax_day"
 			type="date"
+			value-format="yyyy-MM-dd"
 			placeholder="选择日期">
 		</el-date-picker>
 	</el-form-item>
 	<el-form-item label="上传签约用户文件：" label-width="220px" required>
-		<div class="showimg" v-if="reqObj.file" @mouseenter="isDel = true" @mouseleave="isDel = false">
+		<div class="showimg" v-if="fileName != ''" @mouseenter="isDel = true" @mouseleave="isDel = false">
 			<div class="img">{{fileName}}</div>
 			<div class="modal" v-if="isDel == true">
 				<img src="../../assets/deleteImg.png" @click="detele">
@@ -174,19 +175,19 @@
 		},
 		created(){
 			//获取列表
-			this.applyList();
+			this.getList();
 		},
 		watch:{
 			//订单创建时间
 			date:function(n){
-				this.req.start_time = n?n[0]:"";
-				this.req.end_time = n?n[1]:"";
+				this.req.start_time = n.length> 0?n[0]:"";
+				this.req.end_time = n.length> 0?n[1]:"";
 			}
 		},
 		methods:{
 			//获取列表
-			applyList(){
-				resource.invoiceList(this.req).then(res => {
+			getList(){
+				resource.persionaltax(this.req).then(res => {
 					if(res.data.code == 1){
 						this.dataObj = res.data.data;
 					}else{
@@ -195,21 +196,11 @@
 				})
 			},
 			//上传文件
-			uploadFile(){
+			getStorelist(){
 				resource.ajaxstorelist().then(res => {
 					if(res.data.code == 1){
 						this.store_list = res.data.data;
 						this.isDetail = true;
-					}else{
-						this.$message.warning(res.data.msg);
-					}
-				})
-			},
-			//获取商户列表
-			ajaxstorelist(){
-				resource.ajaxstorelist().then(res => {
-					if(res.data.code == 1){
-						this.store_list = res.data.data;
 					}else{
 						this.$message.warning(res.data.msg);
 					}
@@ -240,25 +231,33 @@
 			//上传文件
 			callbackFn(obj){
 				this.fileName = obj.name;
-				this.req.fileObj = obj;
+				this.reqObj.file = obj;
 			},
 			//删除文件
 			detele(){
 				this.fileName = "";
-				this.req.fileObj = null;
+				this.reqObj.file = null;
 			},
 			//提交上传
 			submit(){
-				resource.uploadtax(this.reqObj).then(res => {
-					if(res.data.code == 1){
-						this.isDetail = false;
-						//获取列表
-						this.applyList();
-						this.$message.success(res.data.msg);
-					}else{
-						this.$message.warning(res.data.msg);
-					}
-				})
+				if(this.reqObj.store_id == ''){
+					this.$message.warning('请选择商户');
+				}else if(this.reqObj.tax_day == ''){
+					this.$message.warning('请选择所属期');
+				}else if(!this.reqObj.file){
+					this.$message.warning('请上传签约用户文件');
+				}else{
+					resource.uploadtax(this.reqObj).then(res => {
+						if(res.data.code == 1){
+							this.isDetail = false;
+							//获取列表
+							this.getList();
+							this.$message.success(res.data.msg);
+						}else{
+							this.$message.warning(res.data.msg);
+						}
+					})
+				}
 			}
 			
 		},

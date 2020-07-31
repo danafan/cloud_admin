@@ -53,7 +53,7 @@
 					<span>{{money}}</span>
 				</el-form-item>
 				<el-form-item label="提现金额：" label-width="120px">
-					<el-input v-model="transferReq.withdraw_money" placeholder="请输入"></el-input>
+					<el-input type="number" v-model="transferReq.withdraw_money" placeholder="请输入"></el-input>
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -237,10 +237,11 @@
 				this.showTransfer = true;
 				this.money = money;
 				this.transferReq.account_type = type;
+				this.transferReq.withdraw_money = "";
 			},
 			//确认提现
 			subTransfer(){
-				if(this.transferReq.withdraw_money == '1'){
+				if(this.transferReq.withdraw_money == ''){
 					this.$message.warning("请输入提现金额")
 				}else{
 					this.transferReq.store_id = this.store_id;

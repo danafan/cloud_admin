@@ -13,7 +13,7 @@
 				<div class="row_item">纳税人识别号：{{storeInfoObj.taxpayer_id}}</div>
 			</div>
 			<div class="info_row">
-				<div class="row_item">纳税人类型：{{storeInfoObj.taxpayer_type == '1'?'一般纳税人':'小规模纳税人'}}</div>
+				<div class="row_item">纳税人类型：{{storeInfoObj.taxpayer_type}}</div>
 				<div class="row_item">单位注册地址及电话：{{storeInfoObj.address_phone}}</div>
 			</div>
 			<div class="info_row">
@@ -21,10 +21,10 @@
 			</div>
 			<div class="info_row">
 				<div class="row_item">开户行及帐号：{{storeInfoObj.bank_info}}</div>
-				<div class="row_item">默认发票类目：{{storeInfoObj.open_bank_account}}</div>
+				<div class="row_item">默认发票类目：{{storeInfoObj.default_cate_id}}</div>
 			</div>
 			<div class="info_row">
-				开票类型：{{storeInfoObj.invoice_type == '1'?'打款':'充值'}}
+				开票类型：{{storeInfoObj.invoice_type}}
 			</div>
 		</el-card>
 		<el-card style="margin-top: 24px;">
@@ -187,6 +187,7 @@
 						let resData = res.data.data;
 						this.req = resData.info;
 						let arr = resData.info.cate_ids.split(',');
+						this.cateIdsList = [],
 						arr.map(item => {
 							this.cateIdsList.push(parseInt(item))
 						})

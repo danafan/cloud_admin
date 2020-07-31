@@ -37,34 +37,34 @@
 		<el-dialog title="编辑计费模式" :visible.sync="showBilling">
 			<el-form size="small" style="width: 90%">
 				<el-form-item label="商户服务费费率：" label-width="220px" required>
-					<el-input type="number" v-model="storeInfoObj.default_rate">
+					<el-input type="number" v-model="reqstoreInfoObj.default_rate">
 						<template slot="append">%</template>
 					</el-input>
 					<div style="display: flex;margin-bottom: 20px;margin-top: 20px;">
-						<el-input type="number" v-model="storeInfoObj.money1">
+						<el-input type="number" v-model="reqstoreInfoObj.money1">
 							<template slot="append">元</template>
-						</el-input><div style="width: 200px;">（含）～</div> <el-input type="number" v-model="storeInfoObj.money2">
+						</el-input><div style="width: 200px;">（含）～</div> <el-input type="number" v-model="reqstoreInfoObj.money2">
 							<template slot="append">元</template>
-						</el-input><div style="width: 100px;">收取</div><el-input type="number" v-model="storeInfoObj.rate1">
+						</el-input><div style="width: 100px;">收取</div><el-input type="number" v-model="reqstoreInfoObj.rate1">
 							<template slot="append">%</template>
 						</el-input>
 					</div>
 					<div style="display: flex;margin-bottom: 20px;">
-						<el-input type="number" v-model="storeInfoObj.money2">
+						<el-input type="number" v-model="reqstoreInfoObj.money2">
 							<template slot="append">元</template>
-						</el-input><div style="width: 200px;">（含）～ </div><el-input type="number" v-model="storeInfoObj.money3">
+						</el-input><div style="width: 200px;">（含）～ </div><el-input type="number" v-model="reqstoreInfoObj.money3">
 							<template slot="append">元</template>
-						</el-input><div style="width: 100px;">收取</div><el-input type="number" v-model="storeInfoObj.rate2">
+						</el-input><div style="width: 100px;">收取</div><el-input type="number" v-model="reqstoreInfoObj.rate2">
 							<template slot="append">%</template>
 						</el-input>
 					</div>
 					<div style="display: flex;margin-bottom: 20px;">
 						<div style="width: 100px;">超过</div>
-						<el-input type="number" v-model="storeInfoObj.money3">
+						<el-input type="number" v-model="reqstoreInfoObj.money3">
 							<template slot="append">元</template>
 						</el-input>
 						<div style="width: 260px;">（含），收取</div>
-						<el-input type="number" v-model="storeInfoObj.rate3">
+						<el-input type="number" v-model="reqstoreInfoObj.rate3">
 							<template slot="append">元</template>
 						</el-input>
 					</div>
@@ -79,7 +79,7 @@
 		<el-dialog title="编辑限额信息" :visible.sync="showEdit">
 			<el-form size="small" style="width: 90%">
 				<el-form-item label="全网单人月累计金额限制（元）：" label-width="220px">
-					<el-input v-model="storeInfoObj.person_month_limit" size="small"></el-input>
+					<el-input v-model="reqstoreInfoObj.person_month_limit" size="small"></el-input>
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -151,6 +151,7 @@
 		data(){
 			return{
 				storeInfoObj:{},//全部信息
+				reqstoreInfoObj:{},		//提交的信息
 				showBilling:false,//编辑服务费计费模式弹框
 				showEdit:false,	//编辑限额信息
 			}
@@ -165,6 +166,7 @@
 				resource.getConfig().then(res => {
 					if(res.data.code == 1){
 						this.storeInfoObj = res.data.data;
+						this.reqstoreInfoObj = JSON.parse(JSON.stringify(res.data.data));
 					}else{
 						this.$message.warning(res.data.msg);
 					}
@@ -173,17 +175,19 @@
 			//点击编辑计费模式
 			editBilling(){
 				this.showBilling = true;
+				this.reqstoreInfoObj = JSON.parse(JSON.stringify(this.storeInfoObj)); 
 			},
-			//点击编辑计费模式
+			//点击编辑限额信息
 			edit(){
 				this.showEdit = true;
+				this.reqstoreInfoObj = JSON.parse(JSON.stringify(this.storeInfoObj)); 
 			},
 			//提交修改
 			submitBilling(){
-				if(this.storeInfoObj.default_rate == '' || this.storeInfoObj.money1 == '' ||this.storeInfoObj.money2 == '' ||this.storeInfoObj.money3 == '' || this.storeInfoObj.rate1 == '' || this.storeInfoObj.rate2 == '' || this.storeInfoObj.rate3 == ''){
+				if(this.reqstoreInfoObj.default_rate == '' || this.reqstoreInfoObj.money1 == '' ||this.reqstoreInfoObj.money2 == '' ||this.reqstoreInfoObj.money3 == '' || this.reqstoreInfoObj.rate1 == '' || this.reqstoreInfoObj.rate2 == '' || this.reqstoreInfoObj.rate3 == ''){
 					this.$message.warning("请完善计费模式");
 				}else{
-					resource.editServicerate(this.storeInfoObj).then(res => {
+					resource.editServicerate(this.reqstoreInfoObj).then(res => {
 						if(res.data.code == 1){
 							this.showBilling = false;
 							this.$message.success(res.data.msg);
@@ -197,10 +201,10 @@
 			},
 			//提交修改限额信息
 			submit(){
-				if(this.storeInfoObj.person_month_limit == ''){
+				if(this.reqstoreInfoObj.person_month_limit == ''){
 					this.$message.warning("请输入限额信息");
 				}else{
-					resource.editmoneylimit({person_month_limit:this.storeInfoObj.person_month_limit}).then(res => {
+					resource.editmoneylimit({person_month_limit:this.reqstoreInfoObj.person_month_limit}).then(res => {
 						if(res.data.code == 1){
 							this.showEdit = false;
 							this.$message.success(res.data.msg);
