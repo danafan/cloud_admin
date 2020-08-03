@@ -12,7 +12,7 @@
 				充值到账提醒：{{storeInfoObj.recharge_notice_type == '1'?'短信通知':storeInfoObj.recharge_notice_type == '2'?'邮件通知':'短信和邮件通知'}}
 			</div>
 			<div class="info_row">
-				商户余额提醒：{{storeInfoObj.balance_notice_type == '1'?'短信通知':storeInfoObj.recharge_notice_type == '2'?'邮件通知':'短信和邮件通知'}}
+				商户余额提醒：{{storeInfoObj.balance_notice_type == '1'?'短信通知':storeInfoObj.balance_notice_type == '2'?'邮件通知':'短信和邮件通知'}}
 			</div>
 			<div class="info_row">
 				银行卡余额提醒阈值（元）：{{storeInfoObj.bank_limit}}
@@ -29,10 +29,10 @@
 				<div class="title_txt">接收提醒设置</div>
 			</div>
 			<div class="info_row">
-				充值到账提醒：{{storeInfoObj.recharge_notice_type_name}}
+				充值到账提醒：{{storeInfoObj.recharge_phone}}
 			</div>
 			<div class="info_row">
-				账户余额不足提醒：{{storeInfoObj.balance_notice_type_name}}
+				账户余额不足提醒：{{storeInfoObj.balance_phone}}
 			</div>
 			<div class="info_row">
 				预警及提醒类邮件：{{storeInfoObj.warning_notice_email}}

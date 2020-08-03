@@ -33,6 +33,7 @@ let path = {
 	receiveRecord:'user/receiverecord',							//用户收款记录
 	relievesign:'user/relievesign',								//解约
 	storeList:'store/storelist',								//商户列表
+	storestartstop:'store/storestartstop',
 	storeGetinvoice:'store/getstoreinvoice',					//获取开票信息详情
 	getsub:'store/getstoresubscription',						//获取签约信息
 	getremind:'store/getstoreremind',							//获取提醒设置详情
@@ -214,6 +215,10 @@ export default{
 	//商户列表
 	storeList(params){
 		return http.get(path.storeList, params)
+	},
+	//启用停用商户
+	storestartstop(params){
+		return http.post(path.storestartstop, params)
 	},
 	//获取开票信息详情
 	storeGetinvoice(params){

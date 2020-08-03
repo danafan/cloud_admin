@@ -7,8 +7,8 @@ export default{
 			cancelButtonText: '取消',
 			type: 'warning'
 		}).then(() => {
-			let url = `${location.origin}/admin/${url}`;
-			window.open(url);
+			let open_url = `${location.origin}/admin/${url}`;
+			window.open(open_url);
 		}).catch(() => {
 			Message({
 				type: 'info',

@@ -15,7 +15,7 @@
 			</el-form-item>
 		</el-form>
 		<div class="but">
-			<el-button type="primary" size="small" @click="search">搜索</el-button>
+			<el-button type="primary" size="small" @click="getList">搜索</el-button>
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
 			<el-button type="primary" size="small" @click="create">创建</el-button>
 		</div>
@@ -103,8 +103,8 @@ width="30%">
 		watch:{
 			//时间
 			date:function(n){
-				this.req.created_time_start = n.length> 0?n[0]:"";
-				this.req.created_time_end = n.length> 0?n[1]:"";
+				this.req.created_time_start = n && n.length> 0?n[0]:"";
+				this.req.created_time_end = n && n.length> 0?n[1]:"";
 			}
 		},
 		methods:{
@@ -136,10 +136,6 @@ width="30%">
 					title:"",
 					content:""
 				}
-			},
-			//搜索
-			search(){
-				console.log(this.req);
 			},
 			//重置
 			reset(){

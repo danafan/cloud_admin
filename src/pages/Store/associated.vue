@@ -41,7 +41,7 @@
 		<el-form size="small" style="width: 100%">
 			<el-form-item label="商户名称：" label-width="220px" required>
 				<el-checkbox-group v-model="checkList">
-					<el-checkbox :label="item.store_id" v-for="item in addObj.list" :checked="item.check_status == '1'">{{item.store_name}}</el-checkbox>
+					<el-checkbox :label="item.store_id" v-for="item in addObj.list" :checked="item.check_status == 1">{{item.store_name}}</el-checkbox>
 				</el-checkbox-group>
 			</el-form-item>
 			<el-form-item label="关联说明：" label-width="220px">
@@ -96,7 +96,10 @@
 				},				//请求参数
 				dataObj:{},	
 				showEdit:false,			//默认创建弹框不显示
-				addObj:{},
+				addObj:{
+					list:[],
+					remark:""
+				},
 				type:'1',				//1:创建；2:修改
 				checkList:[],			//选中的商户编号
 				relation_id:"",			//点击的商户id
@@ -151,7 +154,7 @@
 			//编辑
 			edit(id){
 				this.type = '2';
-				this.checkList = [];
+				// this.checkList = [];
 				this.showEdit = true;
 				this.relation_id = id;
 				//获取可用的商户列表或者编辑关联商户
@@ -159,7 +162,7 @@
 			},
 			//获取可用的商户列表或者编辑关联商户
 			getUnrelationStore(){
-				resource.getUnrelationStore().then(res => {
+				resource.getUnrelationStore({relation_id:this.relation_id}).then(res => {
 					if(res.data.code == 1){
 						this.addObj = res.data.data;
 					}else{

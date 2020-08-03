@@ -21,7 +21,10 @@
 					<div>反馈材料</div>
 					<img style="width: 200px;height: 200px" :src="storeInfoObj.business_license_img">
 				</div>
-				
+				<div class="row_item">地区：{{storeInfoObj.area}}</div>
+			</div>
+			<div class="info_row">
+				<div class="row_item">综合服务主体：{{storeInfoObj.service_subject_name}}</div>
 			</div>
 		</el-card>
 		<el-card style="margin-top: 24px;">
@@ -104,14 +107,17 @@
 							<el-input v-model="req.store_name"></el-input>
 						</el-form-item>
 						<el-form-item label="地区：" label-width="220px" required>
-							<el-select v-model="req.area_province_id" @change="changeProvince">
-								<el-option v-for="item in province_list" :key="item.id" :label="item.name" :value="item.id">
-								</el-option>
-							</el-select>
-							<el-select v-model="req.area_city_id" @change="changeCity">
-								<el-option v-for="item in city_list" :key="item.id" :label="item.name" :value="item.id">
-								</el-option>
-							</el-select>
+							<div style="display: flex">
+								<el-select v-model="req.area_province_id" @change="changeProvince">
+									<el-option v-for="item in province_list" :key="item.id" :label="item.name" :value="item.id">
+									</el-option>
+								</el-select>
+								<el-select v-model="req.area_city_id" @change="changeCity">
+									<el-option v-for="item in city_list" :key="item.id" :label="item.name" :value="item.id">
+									</el-option>
+								</el-select>
+							</div>
+							
 						</el-form-item>
 						<el-form-item label="营业执照影印件：" label-width="220px" required>
 							<div class="showimg" v-if="req.business_license_img != ''" @mouseenter="isDel = true" @mouseleave="isDel = false">
@@ -345,6 +351,7 @@
 				
 			},
 			changeProvince(v){
+				this.req.area_city_id = "";
 				//获取地址
 				this.getarea({type:'1',id:v})
 			},

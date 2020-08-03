@@ -243,10 +243,13 @@
 			subTransfer(){
 				if(this.transferReq.withdraw_money == ''){
 					this.$message.warning("请输入提现金额")
+				}else if(this.transferReq.withdraw_money < 0){
+					this.$message.warning("提现金额不能少于0")
 				}else{
 					this.transferReq.store_id = this.store_id;
 					resource.withdraw(this.transferReq).then(res => {
 						if(res.data.code == 1){
+							this.showTransfer = false;
 							this.$message.success(res.data.msg);
 							//获取顶部信息
 							this.getStoreInfo();

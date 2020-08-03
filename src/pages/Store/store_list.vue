@@ -48,7 +48,7 @@
 						<el-button type="text" size="small" @click="look(scope.row.store_id)" v-if="scope.row.status != '2'">查看账户</el-button>
 						<el-button type="text" size="small" @click="editStore(scope.row.store_id)">{{scope.row.status == '2'?'去完善':'修改'}}
 						</el-button>
-						<el-button type="text" size="small" @click="setting(scope.row.status,scope.row.invoice_cate_id)">{{scope.row.status == 1?'停用':'启用'}}</el-button>
+						<el-button type="text" size="small" @click="setting(scope.row.status,scope.row.store_id)" v-if="scope.row.status == 0 || scope.row.status == 1">{{scope.row.status == 1?'停用':'启用'}}</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -65,8 +65,8 @@
 			</el-pagination>
 		</div>
 	</el-card>
-	<!-- 编辑 -->
-		<el-dialog title="编辑" :visible.sync="showEdit">
+	<!-- 创建商户 -->
+		<el-dialog title="创建" :visible.sync="showEdit">
 			<div class="box">
 				<div style="width: 50%">
 					<div class="title">基本信息</div>
@@ -81,7 +81,8 @@
 							<el-input v-model="addObj.store_name"></el-input>
 						</el-form-item>
 						<el-form-item label="地区：" label-width="220px" required>
-							<el-select v-model="addObj.area_province_id" @change="changeProvince">
+							<div style="display: flex">
+								<el-select v-model="addObj.area_province_id" @change="changeProvince">
 								<el-option v-for="item in province_list" :key="item.id" :label="item.name" :value="item.id">
 								</el-option>
 							</el-select>
@@ -89,6 +90,9 @@
 								<el-option v-for="item in city_list" :key="item.id" :label="item.name" :value="item.id">
 								</el-option>
 							</el-select>
+
+							</div>
+							
 						</el-form-item>
 						<el-form-item label="营业执照影印件：" label-width="220px" required>
 							<div class="showimg" v-if="addObj.business_license_img != ''" @mouseenter="isDel = true" @mouseleave="isDel = false">
@@ -277,8 +281,6 @@
 		created(){
 			//获取列表
 			this.getList();
-			//获取地址
-			this.getarea({type:'0',id:'0'});
 		},
 		methods:{
 			//获取列表
@@ -306,7 +308,7 @@
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					resource.startStop({invoice_cate_id:id,type:status == 1?0:1}).then(res => {
+					resource.storestartstop({store_id:id,type:status == 1?0:1}).then(res => {
 						if(res.data.code == 1){
 							this.$message.success(res.data.msg);
 							//获取列表
@@ -355,7 +357,7 @@
 						this.service_list = resData.service_list;
 						this.domain = resData.info.domain;
 						//获取地址
-						this.getarea({type:'1',id:this.addObj.area_province_id});
+						this.getarea({type:'0',id:this.addObj.area_province_id});
 
 					}else{
 						this.$message.warning(res.data.msg);
@@ -364,6 +366,7 @@
 				
 			},
 			changeProvince(v){
+				this.addObj.area_city_id = "";
 				//获取地址
 				this.getarea({type:'1',id:v})
 			},
@@ -390,7 +393,6 @@
 					if(res.data.code == 1){
 						this.domain = res.data.data.domain;
 						this.addObj.business_license_img = res.data.data.urls;
-						console.log(this.addObj)
 					}else{
 						this.$message.warning(res.data.msg);
 					}
@@ -449,7 +451,7 @@
 							this.showEdit = false;
 							this.$message.success(res.data.msg);
 							//获取顶部信息
-							this.getStoreInfo();
+							this.getList();
 						}else{
 							this.$message.warning(res.data.msg);
 						}

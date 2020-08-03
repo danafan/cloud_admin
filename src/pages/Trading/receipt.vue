@@ -127,8 +127,8 @@
 		watch:{
 			//订单完成时间
 			date:function(n){
-				this.req.finished_time_start = n.length> 0?n[0]:"";
-				this.req.finished_time_end = n.length> 0?n[1]:"";
+				this.req.finished_time_start = n && n.length> 0?n[0]:"";
+				this.req.finished_time_end = n && n.length> 0?n[1]:"";
 			}
 		},
 		methods:{

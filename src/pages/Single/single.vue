@@ -167,8 +167,8 @@
 		watch:{
 			//订单创建时间
 			order_create_date:function(n){
-				this.req.created_time_start = n.length> 0?n[0]:"";
-				this.req.created_time_end = n.length> 0?n[1]:"";
+				this.req.created_time_start = n && n.length> 0?n[0]:"";
+				this.req.created_time_end = n && n.length> 0?n[1]:"";
 			}
 		},
 		methods:{

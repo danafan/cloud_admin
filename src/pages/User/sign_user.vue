@@ -276,13 +276,13 @@
 		watch:{
 			//创建时间
 			create_date:function(n){
-				this.req.created_time_start = n.length> 0?n[0]:"";
-				this.req.created_time_end = n.length> 0?n[1]:"";
+				this.req.created_time_start = n && n.length> 0?n[0]:"";
+				this.req.created_time_end = n && n.length> 0?n[1]:"";
 			},
 			//更新时间
 			update_date:function(n){
-				this.req.updated_time_start = n.length> 0?n[0]:"";
-				this.req.updated_time_end = n.length> 0?n[1]:"";
+				this.req.updated_time_start = n && n.length> 0?n[0]:"";
+				this.req.updated_time_end = n && n.length> 0?n[1]:"";
 			}
 		},
 		methods:{

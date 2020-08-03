@@ -76,7 +76,7 @@
 			</el-table-column>
 			<el-table-column width="150" prop="apply_id" label="技术对接" align="center">
 				<template slot-scope="scope">
-					<span>{{is_technology == '1'?'是':'否'}}</span>
+					<span>{{scope.row.is_technology == '1'?'是':'否'}}</span>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -93,11 +93,6 @@
 		</el-pagination>
 	</div>
 </el-card>
-<!-- 查看 -->
-<el-dialog :visible.sync="isDetail">
-	<img :src="picture_url">
-</el-dialog>
-
 </div>
 </template>
 <style lang="less" scoped>
@@ -137,7 +132,7 @@
 					store_name:"",
 				},				//请求参数
 				date:[],	//订单创建时间
-				dataObj:{},	
+				dataObj:{}
 			}
 		},
 		created(){
@@ -147,8 +142,8 @@
 		watch:{
 			//订单创建时间
 			date:function(n){
-				this.req.start_time = n.length> 0?n[0]:"";
-				this.req.end_time = n.length> 0?n[1]:"";
+				this.req.start_time = n && n.length> 0?n[0]:"";
+				this.req.end_time = n && n.length> 0?n[1]:"";
 			}
 		},
 		methods:{

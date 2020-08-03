@@ -9,7 +9,7 @@
 				</div>
 			</div>
 			<div class="info_row">
-				<div class="row_item">企业名称：{{storeInfoObj.service_subject_name}}</div>
+				<div class="row_item">综合服务主体：{{storeInfoObj.service_subject_name}}</div>
 				<div class="row_item">服务状态：{{storeInfoObj.status == '1'?'服务中':'停止服务'}}</div>
 			</div>
 			<div class="info_row">
@@ -24,13 +24,13 @@
 				商户服务费费率：{{storeInfoObj.default_rate}}
 			</div>
 			<div class="info_row">
-				{{storeInfoObj.money1}}（含）～ {{storeInfoObj.money2}}，商户服务费费率：{{storeInfoObj.rate3}}
+				{{storeInfoObj.money1}}（含）～ {{storeInfoObj.money2}}，商户服务费费率：{{storeInfoObj.rate1}}
 			</div>
 			<div class="info_row">
 				{{storeInfoObj.money2}}（含）～ {{storeInfoObj.money3}}，商户服务费费率：{{storeInfoObj.rate2}}
 			</div>
 			<div class="info_row">
-				超过{{storeInfoObj.money3}}（含），商户服务费费率：{{storeInfoObj.rate1}}
+				超过{{storeInfoObj.money3}}（含），商户服务费费率：{{storeInfoObj.rate3}}
 			</div>
 		</el-card>
 		<el-card style="margin-top: 24px;">
@@ -67,10 +67,7 @@
 			<div class="title">基本信息</div>
 			<el-form size="small" style="width: 60%">
 				<el-form-item label="综合服务主体：" label-width="220px" required>
-					<el-select v-model="req.service_subject_id">
-						<el-option v-for="item in service_subject_list" :key="item.id" :label="item.name" :value="item.id">
-						</el-option>
-					</el-select>
+					<el-input v-model="req.service_subject_name" :disabled="true"></el-input>
 				</el-form-item>
 				<el-form-item label="C端签约模式：" label-width="220px" required>
 					<el-select v-model="req.signing_mode">
@@ -219,7 +216,6 @@
 				storeInfoObj:{},
 				showEdit:false,
 				req:{
-					service_subject_id:"",
 					signing_mode:"",
 					contract_id:"",
 					contract_name:"",
@@ -234,7 +230,6 @@
 					rate3: "",
 				},
 				store_name:"",
-				service_subject_list:[],		//综合服务主体列表
 				sign_list:[],					//c端签约模式
 				black_list:[],					//禁止名单
 				date:[],						//合同有效期
@@ -247,8 +242,8 @@
 		watch:{
 			//合同有效期
 			date:function(n){
-				this.req.contract_start_time = n.length> 0?n[0]:"";
-				this.req.contract_end_time = n.length> 0?n[1]:"";
+				this.req.contract_start_time = n && n.length> 0?n[0]:"";
+				this.req.contract_end_time = n && n.length> 0?n[1]:"";
 			}
 		},
 		props:{
@@ -275,17 +270,19 @@
 						this.showEdit = true;
 						let resData = res.data.data;
 						this.req = resData.info;
-						this.service_subject_list = resData.service_subject_list;
 						this.sign_list = resData.sign_list;
-						let obj = {
-							username:"",
-							identity_card:""
-						}
 						this.black_list = resData.black_list;
-						this.black_list.push(obj)
-						this.date.push(resData.info.contract_start_time);
-						this.date.push(resData.info.contract_end_time);
-						
+						if(this.black_list.length == 0){
+							let obj = {
+								username:"",
+								identity_card:""
+							}
+							this.black_list.push(obj)
+						}
+						if(resData.info.contract_start_time && resData.info.contract_end_time){
+							this.date.push(resData.info.contract_start_time);
+							this.date.push(resData.info.contract_end_time);
+						}
 					}else{
 						this.$message.warning(res.data.msg);
 					}
@@ -309,16 +306,21 @@
 			},
 			//提交修改
 			submit(){
-				if(this.req.contract_id == ''){
+				if(!this.req.signing_mode || this.req.signing_mode == ''){
+					this.$message.warning("请选择c端签约模式");
+				}else if(!this.req.contract_id || this.req.contract_id == ''){
 					this.$message.warning("请输入合同编号");
-				}else if(this.req.contract_name == ''){
+				}else if(!this.req.contract_name || this.req.contract_name == ''){
 					this.$message.warning("请输入合同名称");
 				}else if(this.date.length == 0){
 					this.$message.warning("请输入合同有效期");
 				}else if(this.req.default_rate == '' || this.req.money1 == '' ||this.req.money2 == '' ||this.req.money3 == '' || this.req.rate1 == '' || this.req.rate2 == '' || this.req.rate3 == ''){
 					this.$message.warning("请完善计费模式");
 				}else{
-					this.req.black_list = JSON.stringify(this.black_list);
+					this.req.store_id = this.store_id;
+					if(this.black_list[0].username != '' && this.black_list[0].identity_card != ''){
+						this.req.black_list = JSON.stringify(this.black_list);
+					}
 					resource.addEditSubPost(this.req).then(res => {
 						if(res.data.code == 1){
 							this.showEdit = false;
