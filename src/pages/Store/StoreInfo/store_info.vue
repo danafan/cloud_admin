@@ -169,11 +169,14 @@
 					</el-form>
 					<div class="title">收款账户</div>
 					<el-form size="small" style="width: 100%">
-						<el-form-item label="开户银行：" label-width="220px" required>
+						<el-form-item label="银行名称：" label-width="220px" required>
 							<el-select v-model="req.bank_id">
 								<el-option v-for="item in bank_list" :key="item.bank_id" :label="item.bank_name" :value="item.bank_id">
 								</el-option>
 							</el-select>
+						</el-form-item>
+						<el-form-item label="开户银行：" label-width="220px" required>
+							<el-input v-model="req.bank_name"></el-input>
 						</el-form-item>
 						<el-form-item label="专属账户：" label-width="220px" required>
 							<el-input v-model="req.bank_no"></el-input>
@@ -402,8 +405,14 @@
 					this.$message.warning("请输入社会统一信用代码");
 				}else if(this.req.store_name == ''){
 					this.$message.warning("请输入商户名称");
+				}else if(this.req.area_province_id == ''){
+					this.$message.warning("请选择省");
+				}else if(this.req.area_city_id == ''){
+					this.$message.warning("请选择市");
 				}else if(this.req.business_license_img == ''){
 					this.$message.warning("请上传营业执照影印件");
+				}else if(this.req.service_subject_id == ''){
+					this.$message.warning("请选择综合服务主体");
 				}else if(this.req.contacts_name == ''){
 					this.$message.warning("请输入联系人姓名");
 				}else if(this.req.contacts_phone == ''){
@@ -420,12 +429,18 @@
 					this.$message.warning("请输入姓名");
 				}else if(this.req.store_admin_phone == ''){
 					this.$message.warning("请输入手机号");
+				}else if(this.req.bank_id == ''){
+					this.$message.warning("请选择银行名称");
+				}else if(this.req.bank_name == ''){
+					this.$message.warning("请输入开户银行");
 				}else if(this.req.bank_no == ''){
 					this.$message.warning("请输入专属账户");
 				}else if(this.req.open_bank_account == ''){
 					this.$message.warning("请输入对公账号");
 				}else if(this.req.open_bank_name == ''){
 					this.$message.warning("请输入开户银行");
+				}else if(this.req.account_manager_id == ''){
+					this.$message.warning("请选择客户经理");
 				}else if(this.req.account_manager_phone == ''){
 					this.$message.warning("请输入手机号");
 				}else if(this.req.account_manager_email == ''){

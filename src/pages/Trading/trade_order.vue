@@ -5,6 +5,9 @@
 				<el-form-item label="平台订单号：">
 					<el-input v-model="req.order_id" placeholder="请输入"></el-input>
 				</el-form-item>
+				<el-form-item label="商户名称">
+					<el-input v-model="req.store_name" placeholder="请输入"></el-input>
+				</el-form-item>
 				<el-form-item label="商户订单号：">
 					<el-input v-model="req.sorder_sn" placeholder="请输入"></el-input>
 				</el-form-item>
@@ -53,7 +56,7 @@
 		</el-form-item>
 	</el-form>
 	<div class="but">
-		<el-button type="primary" size="small" @click="getList">搜索</el-button>
+		<el-button type="primary" size="small" @click="orderList">搜索</el-button>
 		<el-button type="primary" size="small" @click="reset">重置</el-button>
 	</div>
 	<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
@@ -76,6 +79,8 @@
 		<el-table-column width="150" prop="bank_name" label="收款银行名称" align="center">
 		</el-table-column>
 		<el-table-column width="150" prop="sorder_sn" label="商户订单号" align="center">
+		</el-table-column>
+		<el-table-column width="150" prop="store_name" label="商户名称" align="center">
 		</el-table-column>
 		<el-table-column width="150" prop="name" label="收款姓名" align="center">
 		</el-table-column>
@@ -101,15 +106,6 @@
 				<div style="color: red" v-if="scope.row.order_status1 == 2">{{scope.row.order_status2 | orderStatus2}}</div>
 				<div style="color: red" v-if="scope.row.order_status1 == 3">{{scope.row.order_status2 | orderStatus3}}</div>
 				<div style="color: red" v-if="scope.row.order_status1 == 2 || scope.row.order_status1 == 3">{{scope.row.status_desc}}</div>
-			</template>
-		</el-table-column>
-		<el-table-column fixed="right" label="操作" align="center">
-			<template slot-scope="scope">
-				<el-button v-if="judgeQu(scope.row)" type="text" size="small" @click="cancel(scope.row.order_id)">取消打款</el-button>
-				<el-button v-if="judgeInfo(scope.row)" type="text" size="small" @click="getUpdateInfo(scope.row.order_id)">修改信息</el-button>
-				<el-button v-if="judgeMoney(scope.row)" type="text" size="small" @click="getUpdateMoney(scope.row.order_id)">修改金额</el-button>
-				<!-- <el-button v-if="judgeDetail(scope.row)" type="text" size="small" @click="getDetail(scope.row.order_id)">详情</el-button> -->
-				<el-button type="text" size="small" @click="getDetail(scope.row.order_id)">详情</el-button>
 			</template>
 		</el-table-column>
 	</el-table>
@@ -179,6 +175,7 @@
 					page:1,
 					pagesize:10,
 					order_id:"",
+					store_name:"",
 					sorder_sn:"",
 					bank_card_no:"",
 					name:"",
@@ -284,6 +281,7 @@
 					page:1,
 					pagesize:10,
 					order_id:"",
+					store_name:"",
 					sorder_sn:"",
 					bank_card_no:"",
 					name:"",
@@ -306,118 +304,6 @@
 				this.req.page = val;
 				//获取列表
 				this.getList();
-			},
-			//取消打款
-			judgeQu(item){
-				if(item.order_status1 == 1){
-					return true;
-				}else if(item.order_status1 == 2 && item.order_status2 == 5 && item.batch_status == 0){
-					return true;
-				}else if(item.order_status1 == 3 && item.order_status2 == 2 && item.batch_status == 0){
-					return true;
-				}else{
-					return false;
-				}
-			},
-			//修改信息
-			judgeInfo(item){
-				if(item.order_status1 == 3 && item.order_status2 == 1 && item.batch_status == 0){
-					return true;
-				}else{
-					return false;
-				}
-			},
-			//修改金额
-			judgeMoney(item){
-				if(item.order_status1 == 3 && item.order_status2 == 2 && item.batch_status == 0){
-					return true;
-				}else{
-					return false;
-				}
-			},
-			//详情
-			judgeDetail(item){
-				if(item.order_status1 == 2 || item.order_status1 == 6 && item.order_status1 == 8){
-					return true;
-				}else{
-					return false;
-				}
-			},
-			//取消打款
-			cancel(order_id){
-				this.$confirm('确认取消该订单打款?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					resource.cancel({order_id:order_id}).then(res => {
-						if(res.data.code == 1){
-							this.$message.success(res.data.msg);
-							//获取列表
-							this.getList();
-						}else{
-							this.$message.warning(res.data.msg);
-						}
-					})
-				}).catch(() => {
-					this.$message({
-						type: 'info',
-						message: '取消'
-					});          
-				});
-			},
-			//修改信息
-			getUpdateInfo(order_id){
-				this.order_id = order_id;
-				this.updateInfo = true;
-			},
-			//提交修改信息
-			subUpdateInfo(){
-				let req = this.updateInfoReq;
-				if(req.name == ''){	
-					this.$message.warning("请输入收款户名");
-				}else if(req.id_card_no == ''){	
-					this.$message.warning("请输入证件号码");
-				}else if(req.bank_card_no == ''){	
-					this.$message.warning("请输入收款账号");
-				}else{
-					req.order_id = this.order_id;
-					resource.editOrder(req).then(res => {
-						if(res.data.code == 1){
-							this.$message.success(res.data.msg);
-							//获取列表
-							this.getList();
-						}else{
-							this.$message.warning(res.data.msg);
-						}
-					})
-				}
-			},
-			//修改金额
-			getUpdateMoney(order_id){
-				this.order_id = order_id;
-				this.updateMoney = true;
-			},
-			//提交修改金额
-			subUpdateMoney(){
-				let req = this.updateMoneyReq;
-				if(req.pay_money == ''){	
-					this.$message.warning("请输入打款金额");
-				}else{
-					resource.editPayMoney(req).then(res => {
-						if(res.data.code == 1){
-							this.$message.success(res.data.msg);
-							//获取列表
-							this.getList();
-						}else{
-							this.$message.warning(res.data.msg);
-						}
-					})
-				}
-			},
-			//详情
-			getDetail(order_id){
-				this.$router.push('/order_detail?order_id=' + order_id);
 			}
 		},
 		filters:{

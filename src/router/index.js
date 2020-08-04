@@ -5,7 +5,6 @@ const login = resolve=>require(['@/pages/Login/login'],resolve)
 const home = resolve=>require(['@/pages/Home/home'],resolve)
 const index = resolve=>require(['@/pages/Index/index'],resolve)
 const trade_order = resolve=>require(['@/pages/Trading/trade_order'],resolve)
-const order_detail = resolve=>require(['@/pages/Trading/order_detail'],resolve)
 const receipt = resolve=>require(['@/pages/Trading/receipt'],resolve)
 const hang_order = resolve=>require(['@/pages/Trading/hang_order'],resolve)
 const pay_record = resolve=>require(['@/pages/Trading/pay_record'],resolve)
@@ -43,7 +42,6 @@ const router = new Router({
     children:[
     { path: '/index',name:"首页列表", component: index},
     { path: '/trade_order',name:"交易订单", component: trade_order},
-    { path: '/order_detail',name:"订单详情", component: order_detail},
     { path: '/receipt',name:"电子回单", component: receipt},
     { path: '/hang_order',name:"挂起订单", component: hang_order},
     { path: '/pay_record',name:"批量打款记录", component: pay_record},

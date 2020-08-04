@@ -70,7 +70,7 @@
 			<el-form-item label="登录用户名" label-width="180px" required>
 				<el-input v-model="updateInfoReq.admin_name"></el-input>
 			</el-form-item>
-			<el-form-item label="密码" label-width="180px" required>
+			<el-form-item label="密码" label-width="180px">
 				<el-input v-model="updateInfoReq.password"></el-input>
 			</el-form-item>
 			<el-form-item label="邮箱" label-width="180px" required>
@@ -195,6 +195,7 @@
 				this.updateInfoReq = {
 					admin_name:"",
 					admin_email:"",
+					password:"",
 					realname:"",
 					admin_phone:"",
 					remark:""
@@ -242,7 +243,7 @@
 					this.$message.warning('请输入登录用户名');
 				}else if(this.updateInfoReq.admin_email == ''){
 					this.$message.warning('请输入邮箱');
-				}else if(this.updateInfoReq.password == ''){
+				}else if(this.updateInfoType == '1' && this.updateInfoReq.password == ''){
 					this.$message.warning('请输入密码');
 				}else if(this.updateInfoReq.realname == ''){
 					this.$message.warning('请输入姓名');

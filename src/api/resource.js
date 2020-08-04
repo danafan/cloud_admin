@@ -21,13 +21,13 @@ let path = {
 	transFerrecord:'storebill/transferrecord',					//转账付款、转账收款账户
 	serviceChargeRecord:'storebill/servicechargerecord',		//服务费记录
 	invoiceCategoryList:'invoicecategory/index',				//发票类目列表
-	startStop:'invoicecategory/startstop',						//操作发票起停用
-	editInvoiceCategory:'invoicecategory/edit',					//编辑发票类目
-	createInvoice:'invoicecategory/add',						//新增发票类目
+	startStop:'invoicecategory/catestartstop',						//操作发票起停用
+	editInvoiceCategory:'invoicecategory/editcategory',					//编辑发票类目
+	createInvoice:'invoicecategory/addcategory',						//新增发票类目
 	applyList:'invoice/applylist',								//发票记录列表
 	applyDetail:'invoice/detail',								//发票详情
 	invoiceList:'invoice/invoicelist',							//已开发票列表
-	invoiceInput:'invoice/input',								//发票单号录入
+	invoiceInput:'invoice/inputcode',								//发票单号录入
 	userList:'user/userlist',									//签约用户列表
 	getInfo:'user/getuserinfo',									//获取签约用户信息
 	receiveRecord:'user/receiverecord',							//用户收款记录
@@ -61,9 +61,11 @@ let path = {
 	getNotice:'message/getnotice',									//公告详情
 	createNotice:'message/createnotice',							//创建公告
 	getConfig:'config/getconfig',									//系统基础配置
-	ervicesubject:'servicesubject/list',								//综合服务主体列表
+	ervicesubject:'servicesubject/list',							//综合服务主体列表
 	servicesubject:'servicesubject/getdetail',						//获取综合服务主体详情
-	servicesubjectAdd:'servicesubject/add',							//创建综合服务主体
+	createServicesubject:'servicesubject/create',					//创建综合服务主体第一步
+	createnuonuouser:'servicesubject/createnuonuouser',				//创建综合服务主体第二步
+	uploadcontract:'servicesubject/uploadcontract',					//创建综合服务主体第三步
 	servicesubjectEdit:'servicesubject/edit',						//编辑综合服务主体
 	editServicerate:'config/editservicerate',						//编辑服务费计费模式
 	editmoneylimit:'config/editmoneylimit',							//编辑限额信息
@@ -352,9 +354,17 @@ export default{
 	servicesubject(params){
 		return http.get(path.servicesubject, params)
 	},
-	//创建综合服务主体
-	servicesubjectAdd(params){
-		return http.post(path.servicesubjectAdd, params)
+	//创建综合服务主体第一步
+	createServicesubject(params){
+		return http.post(path.createServicesubject, params)
+	},
+	//创建综合服务主体第二步
+	createnuonuouser(params){
+		return http.post(path.createnuonuouser, params)
+	},
+	//创建综合服务主体第三步
+	uploadcontract(params){
+		return http.post(path.uploadcontract, params)
 	},
 	//编辑综合服务主体
 	servicesubjectEdit(params){

@@ -17,9 +17,10 @@
 				</el-table-column>
 				<el-table-column width="150" prop="sign_enterprises" label="签约企业名称" align="center">
 				</el-table-column>
-				<el-table-column width="150" prop="apply_id" label="操作" align="center">
+				<el-table-column width="150" label="操作" align="center">
 					<template slot-scope="scope">
-						<el-button type="text" size="small" @click="edit(scope.row.id)">编辑</el-button>
+						<el-button type="text" size="small" @click="edit(scope.row.id)" v-if="scope.row.info_status == 3">编辑</el-button>
+						<el-button type="text" size="small" @click="perfect(scope.row.id,scope.row.info_status)" v-else>去完善</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -37,26 +38,50 @@
 		</div>
 	</el-card>
 	<!-- 编辑 -->
-	<el-dialog :title="type == '1'?'添加':'编辑'" :visible.sync="showEdit">
-		<el-form size="small" style="width: 100%">
+	<el-dialog :title="type == '1'?'创建':'编辑'" :visible.sync="showEdit">
+		<el-form size="small" style="width: 100%" v-if="step == 1">
 			<el-form-item label="综合服务主体：" label-width="220px" required>
-				<el-input v-model="detailObj.name"></el-input>
+				<el-input v-model="stepReq1.name"></el-input>
 			</el-form-item>
 			<el-form-item label="企业名称：" label-width="220px" required>
-				<el-input v-model="detailObj.enterprise_name" :disabled="type == '2'"></el-input>
+				<el-input v-model="stepReq1.enterprise_name" :disabled="type == '2'"></el-input>
 			</el-form-item>
 			<el-form-item label="统一社会信用代码：" label-width="220px" required>
-				<el-input v-model="detailObj.enterprise_no" :disabled="type == '2'"></el-input>
-			</el-form-item>
-			<el-form-item label="经办人姓名：" label-width="220px" required>
-				<el-input v-model="detailObj.operator" :disabled="type == '2'"></el-input>
-			</el-form-item>
-			<el-form-item label="经办人证件号：" label-width="220px" required>
-				<el-input v-model="detailObj.operator_id_card" :disabled="type == '2'"></el-input>
+				<el-input v-model="stepReq1.enterprise_no" :disabled="type == '2'"></el-input>
 			</el-form-item>
 			<el-form-item label="经办人手机号：" label-width="220px" required>
-				<el-input v-model="detailObj.operator_phone" :disabled="type == '2'"></el-input>
+				<el-input v-model="stepReq1.operator_phone" :disabled="type == '2'"></el-input>
 			</el-form-item>
+			<div class="title">发票配置</div>
+			<el-form-item label="应用名称：" label-width="220px" required>
+				<el-input v-model="stepReq1.invoice_app_name" :disabled="type == '2'"></el-input>
+			</el-form-item>
+			<el-form-item label="app_key：" label-width="220px" required>
+				<el-input v-model="stepReq1.invoice_app_key" :disabled="type == '2'"></el-input>
+			</el-form-item>
+			<el-form-item label="app_secret：" label-width="220px" required>
+				<el-input v-model="stepReq1.invoice_app_secret" :disabled="type == '2'"></el-input>
+			</el-form-item>
+			<div class="title">电子合同配置</div>
+			<el-form-item label="应用名称：" label-width="220px" required>
+				<el-input v-model="stepReq1.contract_app_name" :disabled="type == '2'"></el-input>
+			</el-form-item>
+			<el-form-item label="app_key：" label-width="220px" required>
+				<el-input v-model="stepReq1.contract_app_key" :disabled="type == '2'"></el-input>
+			</el-form-item>
+			<el-form-item label="app_secret：" label-width="220px" required>
+				<el-input v-model="stepReq1.contract_app_secret" :disabled="type == '2'"></el-input>
+			</el-form-item>
+		</el-form>
+		<el-form size="small" style="width: 100%" v-if="step == 2">
+			<el-form-item label="经办人姓名：" label-width="220px" required>
+				<el-input v-model="stepReq2.operator" :disabled="type == '2'"></el-input>
+			</el-form-item>
+			<el-form-item label="经办人证件号：" label-width="220px" required>
+				<el-input v-model="stepReq2.operator_id_card" :disabled="type == '2'"></el-input>
+			</el-form-item>
+		</el-form>
+		<el-form size="small" style="width: 100%" v-if="step == 3">
 			<el-form-item label="上传文件：" label-width="220px" required>
 				<div class="showimg" v-if="fileName != ''" @mouseenter="isDel = true" @mouseleave="isDel = false">
 					<div class="img">{{fileName}}</div>
@@ -66,30 +91,11 @@
 				</div>
 				<upload-file @callbackFn="callbackFn" v-else></upload-file>
 			</el-form-item>
-			<div class="title">发票配置</div>
-			<el-form-item label="应用名称：" label-width="220px" required>
-				<el-input v-model="detailObj.invoice_app_name" :disabled="type == '2'"></el-input>
-			</el-form-item>
-			<el-form-item label="app_key：" label-width="220px" required>
-				<el-input v-model="detailObj.invoice_app_key" :disabled="type == '2'"></el-input>
-			</el-form-item>
-			<el-form-item label="app_secret：" label-width="220px" required>
-				<el-input v-model="detailObj.invoice_app_secret" :disabled="type == '2'"></el-input>
-			</el-form-item>
-			<div class="title">电子合同配置</div>
-			<el-form-item label="应用名称：" label-width="220px" required>
-				<el-input v-model="detailObj.contract_app_name" :disabled="type == '2'"></el-input>
-			</el-form-item>
-			<el-form-item label="app_key：" label-width="220px" required>
-				<el-input v-model="detailObj.contract_app_key" :disabled="type == '2'"></el-input>
-			</el-form-item>
-			<el-form-item label="app_secret：" label-width="220px" required>
-				<el-input v-model="detailObj.contract_app_secret" :disabled="type == '2'"></el-input>
-			</el-form-item>
 		</el-form>
 		<div slot="footer" class="dialog-footer">
-			<el-button @click="showEdit = false">取 消</el-button>
-			<el-button type="primary" @click="submit">确 定</el-button>
+			<el-button type="primary" @click="next" v-if="step == 1 || step == 2">下一步</el-button>
+			<el-button @click="showEdit = false"  v-if="step == 3">取 消</el-button>
+			<el-button type="primary" @click="submit" v-if="step == 3">确 定</el-button>
 		</div>
 	</el-dialog>
 
@@ -203,21 +209,26 @@
 				},				//请求参数
 				dataObj:{},	
 				showEdit:false,			//编辑弹框
-				detailObj:{
+				step:1,			//默认第一步
+				stepReq1:{
 					name:"",
 					enterprise_name:"",
 					enterprise_no:"",
-					operator:"",
-					operator_id_card:"",
 					operator_phone:"",
 					invoice_app_name:"",
 					invoice_app_key:"",
 					invoice_app_secret:"",
 					contract_app_name:"",
 					contract_app_key:"",
-					contract_app_secret:"",
+					contract_app_secret:""
+				},
+				stepReq2:{
+					operator:"",
+					operator_id_card:""
+				},
+				stepReq3:{
 					sign_protocol:{}
-				},			//详情
+				},
 				isDel:false,
 				fileName:"",
 				type:"1",			//1:添加；2:编辑
@@ -242,47 +253,116 @@
 			//上传文件
 			callbackFn(obj){
 				this.fileName = obj.name;
-				this.detailObj.sign_protocol = obj;
+				this.stepReq3.sign_protocol = obj;
 			},
 			//删除文件
 			detele(){
 				this.fileName = "";
-				this.detailObj.sign_protocol = null;
+				this.stepReq3.sign_protocol = null;
 			},
-			//点击添加
+			//点击创建
 			create(){
-				this.detailObj = {
+				this.stepReq1 = {
 					name:"",
 					enterprise_name:"",
 					enterprise_no:"",
-					operator:"",
-					operator_id_card:"",
 					operator_phone:"",
 					invoice_app_name:"",
 					invoice_app_key:"",
 					invoice_app_secret:"",
 					contract_app_name:"",
 					contract_app_key:"",
-					contract_app_secret:"",
+					contract_app_secret:""
+				};
+				this.stepReq2 = {
+					operator:"",
+					operator_id_card:""
+				},
+				this.stepReq3 = {
 					sign_protocol:{}
-				}
+				},
 				this.showEdit = true;
 				this.fileName = "";
-				this.type = "1";			
+				this.type = "1";	
+				this.step = 1;		
+			},
+			//去完善
+			perfect(id,info_status){
+				this.stepReq2 = {
+					operator:"",
+					operator_id_card:""
+				},
+				this.stepReq3 = {
+					sign_protocol:{}
+				},
+				this.showEdit = true;
+				this.fileName = "";
+				this.type = "1";
+				this.id= id;
+				this.step = info_status + 1;
+			},
+			//下一步
+			next(){
+				if(this.step == 1){		//第一步
+					if(this.stepReq1.name == ''){
+						this.$message.warning("请输入综合服务主体名称");
+					}else if(this.stepReq1.enterprise_name == ''){
+						this.$message.warning("请输入企业名称");
+					}else if(this.stepReq1.enterprise_no == ''){
+						this.$message.warning("请输入统一社会信用代码");
+					}else if(this.stepReq1.operator_phone == ''){
+						this.$message.warning("请输入经办人手机号");
+					}else if(this.stepReq1.invoice_app_name == ''){
+						this.$message.warning("请输入发票应用名称");
+					}else if(this.stepReq1.invoice_app_key == ''){
+						this.$message.warning("请输入发票应用app key");
+					}else if(this.stepReq1.invoice_app_secret == ''){
+						this.$message.warning("请输入发票应用app secret");
+					}else if(this.stepReq1.contract_app_name == ''){
+						this.$message.warning("请输入电子合同应用名称");
+					}else if(this.stepReq1.contract_app_key == ''){
+						this.$message.warning("请输入电子合同应用app key");
+					}else if(this.stepReq1.contract_app_secret == ''){
+						this.$message.warning("请输入电子合同应用app secret");
+					}else{
+						resource.createServicesubject(this.stepReq1).then(res => {
+							if(res.data.code == 1){
+								this.$message.success(res.data.msg);
+								this.id = res.data.data;
+								this.step += 1;	
+							}else{
+								this.$message.warning(res.data.msg);
+							}
+						})
+					}
+				}else if(this.step == 2){//第二步
+					if(this.stepReq2.operator == ''){
+						this.$message.warning("请输入经办人姓名");
+					}else if(this.stepReq2.operator_id_card == ''){
+						this.$message.warning("请输入经办人身份证");
+					}else{
+						this.stepReq2.id = this.id;
+						resource.createnuonuouser(this.stepReq2).then(res => {
+							if(res.data.code == 1){
+								this.$message.success(res.data.msg);
+								this.step += 1;	
+							}else{
+								this.$message.warning(res.data.msg);
+							}
+						})
+					}
+				}	
 			},
 			//点击编辑
 			edit(id){
 				this.id = id;
-				resource.servicesubject({id:id}).then(res => {
-					if(res.data.code == 1){
-						this.showEdit = true;
-						this.type = "2";
-						this.fileName = "";
-						this.detailObj = res.data.data;
-					}else{
-						this.$message.warning(res.data.msg);
-					}
-				})
+				this.showEdit = true;
+				this.type = "2";
+				this.step = 3;	
+				this.fileName = "";
+				this.stepReq3 = {
+					sign_protocol:{}
+				}
 			},
 			//分页
 			handleSizeChange(val) {
@@ -297,35 +377,12 @@
 			},
 			//提交
 			submit(){
-				if(this.type == '1'){		//添加
-					if(this.detailObj.name == ''){
-						this.$message.warning("请输入综合服务主体名称");
-					}else if(this.detailObj.enterprise_name == ''){
-						this.$message.warning("请输入企业名称");
-					}else if(this.detailObj.enterprise_no == ''){
-						this.$message.warning("请输入统一社会信用代码");
-					}else if(this.detailObj.operator == ''){
-						this.$message.warning("请输入经办人姓名");
-					}else if(this.detailObj.operator_id_card == ''){
-						this.$message.warning("请输入经办人身份证");
-					}else if(this.detailObj.operator_phone == ''){
-						this.$message.warning("请输入经办人手机号");
-					}else if(this.fileName == ''){
-						this.$message.warning("请上传签约协议");
-					}else if(this.detailObj.invoice_app_name == ''){
-						this.$message.warning("请输入发票应用名称");
-					}else if(this.detailObj.invoice_app_key == ''){
-						this.$message.warning("请输入发票应用app key");
-					}else if(this.detailObj.invoice_app_secret == ''){
-						this.$message.warning("请输入发票应用app secret");
-					}else if(this.detailObj.contract_app_name == ''){
-						this.$message.warning("请输入电子合同应用名称");
-					}else if(this.detailObj.contract_app_key == ''){
-						this.$message.warning("请输入电子合同应用app key");
-					}else if(this.detailObj.contract_app_secret == ''){
-						this.$message.warning("请输入电子合同应用app secret");
-					}else{
-						resource.servicesubjectAdd(this.detailObj).then(res => {
+				if(this.fileName == ''){
+					this.$message.warning("请上传签约协议");
+				}else{
+					this.stepReq3.id = this.id;
+					if(this.type == '1'){// 创建
+						resource.uploadcontract(this.stepReq3).then(res => {
 							if(res.data.code == 1){
 								this.showEdit = false;
 								this.$message.success(res.data.msg);
@@ -335,19 +392,8 @@
 								this.$message.warning(res.data.msg);
 							}
 						})
-					}
-				}else{	//编辑
-					if(this.detailObj.name == ''){
-						this.$message.warning("请输入综合服务主体名称");
-					}else if(this.fileName == ''){
-						this.$message.warning("请上传签约协议");
-					}else{
-						let req = {
-							id:this.id,
-							name:this.detailObj.name,
-							sign_protocol:this.detailObj.sign_protocol
-						}
-						resource.servicesubjectEdit(req).then(res => {
+					}else{	//编辑
+						resource.servicesubjectEdit(this.stepReq3).then(res => {
 							if(res.data.code == 1){
 								this.showEdit = false;
 								this.$message.success(res.data.msg);

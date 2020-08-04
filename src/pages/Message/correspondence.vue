@@ -60,7 +60,7 @@ width="30%">
 		<el-form-item label="函件标题：" label-width="220px" required>
 			<el-input v-model="createReq.title" placeholder="请输入内容"></el-input>
 		</el-form-item>
-		<el-form-item label="函件标题：" label-width="220px" required>
+		<el-form-item label="函件内容：" label-width="220px" required>
 			<el-input type="textarea" v-model="createReq.content" :row="3" placeholder="请输入内容"></el-input>
 		</el-form-item>
 	</el-form>

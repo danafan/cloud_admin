@@ -162,6 +162,15 @@
 			//获取信息
 			this.getStoreInfo();
 		},
+		watch:{
+			cateIdsList:function(n,o){
+				if(n != o){
+					this.req.default_cate_id = "";
+					let arr = this.cate_list.filter(item => this.cateIdsList.find(_item => _item=== item.invoice_cate_id));
+					this.default_cate_list = arr
+				}
+			}
+		},
 		props:{
 			store_id:{
 				type:String,
@@ -189,7 +198,9 @@
 						let arr = resData.info.cate_ids.split(',');
 						this.cateIdsList = [],
 						arr.map(item => {
-							this.cateIdsList.push(parseInt(item))
+							if(item != ''){
+								this.cateIdsList.push(parseInt(item))
+							}
 						})
 						this.cate_list = resData.cate_list;
 						this.default_cate_list = resData.default_cate_list;
@@ -210,6 +221,8 @@
 					this.$message.warning("请输入开户行及帐号");
 				}else if(this.cateIdsList.length == 0){
 					this.$message.warning("请选择发票类目");
+				}else if(this.req.default_cate_id == ''){
+					this.$message.warning("请选择默认发票类目");
 				}else if(this.req.recieve_user == ''){
 					this.$message.warning("请输入收件人姓名");
 				}else if(this.req.recieve_phone == ''){

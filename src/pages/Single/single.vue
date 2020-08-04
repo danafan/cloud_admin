@@ -29,6 +29,9 @@
 			<el-form-item label="订单流水号：">
 				<el-input v-model="req.adjust_id" placeholder="请输入"></el-input>
 			</el-form-item>
+			<el-form-item label="商户名称：">
+				<el-input v-model="req.store_name" placeholder="请输入"></el-input>
+			</el-form-item>
 			<el-form-item label="状态：">
 				<el-select v-model="req.feedback_status" placeholder="不限" clearable>
 					<el-option v-for="item in feedback_list" :key="item.id" :label="item.name" :value="item.id">
@@ -120,6 +123,7 @@
 					created_time_end:"",
 					order_id:"",
 					name:"",
+					store_name:"",
 					adjust_id:"",
 					feedback_status:"",
 					audit_status:""
@@ -193,6 +197,7 @@
 					created_time_end:"",
 					order_id:"",
 					name:"",
+					store_name:"",
 					adjust_id:"",
 					feedback_status:"",
 					audit_status:""
@@ -211,7 +216,7 @@
 			},
 			//操作
 			getDetail(id){
-				this.$router.push("/single_detail?adjust_id = " + id);
+				this.$router.push("/single_detail?adjust_id=" + id);
 			}
 		},
 		filters:{

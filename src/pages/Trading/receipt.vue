@@ -5,6 +5,9 @@
 				<el-form-item label="平台订单号：">
 					<el-input v-model="req.order_id" placeholder="请输入"></el-input>
 				</el-form-item>
+				<el-form-item label="商户名称：">
+					<el-input v-model="req.store_name" placeholder="请输入"></el-input>
+				</el-form-item>
 				<el-form-item label="商户订单号：">
 					<el-input v-model="req.sorder_sn" placeholder="请输入"></el-input>
 				</el-form-item>
@@ -47,6 +50,8 @@
 			<el-table-column width="150" prop="order_id" label="平台订单号" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="sorder_sn" label="商户订单号" align="center">
+			</el-table-column>
+			<el-table-column width="150" prop="store_name" label="商户名称" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="receipt_name" label="回单名称" align="center">
 			</el-table-column>
@@ -96,6 +101,7 @@
 					page:1,
 					pagesize:10,
 					order_id:"",
+					store_name:"",
 					sorder_sn:"",
 					bank_card_no:"",
 					name:"",
@@ -149,6 +155,7 @@
 					page:1,
 					pagesize:10,
 					order_id:"",
+					store_name:"",
 					sorder_sn:"",
 					bank_card_no:"",
 					name:"",

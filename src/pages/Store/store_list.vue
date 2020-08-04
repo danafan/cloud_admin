@@ -45,8 +45,8 @@
 				</el-table-column>
 				<el-table-column fixed="right" label="操作" align="center">
 					<template slot-scope="scope">
-						<el-button type="text" size="small" @click="look(scope.row.store_id)" v-if="scope.row.status != '2'">查看账户</el-button>
-						<el-button type="text" size="small" @click="editStore(scope.row.store_id)">{{scope.row.status == '2'?'去完善':'修改'}}
+						<el-button type="text" size="small" @click="look(scope.row.store_id)" v-if="scope.row.status == '1'">查看账户</el-button>
+						<el-button type="text" size="small" @click="editStore(scope.row.store_id)" v-if="scope.row.status == '1' || scope.row.status == '2'">{{scope.row.status == '2'?'去完善':'修改'}}
 						</el-button>
 						<el-button type="text" size="small" @click="setting(scope.row.status,scope.row.store_id)" v-if="scope.row.status == 0 || scope.row.status == 1">{{scope.row.status == 1?'停用':'启用'}}</el-button>
 					</template>
@@ -417,8 +417,14 @@
 					this.$message.warning("请输入社会统一信用代码");
 				}else if(this.addObj.store_name == ''){
 					this.$message.warning("请输入商户名称");
+				}else if(this.addObj.area_province_id == ''){
+					this.$message.warning("请选择省");
+				}else if(this.addObj.area_city_id == ''){
+					this.$message.warning("请选择市");
 				}else if(this.addObj.business_license_img == ''){
 					this.$message.warning("请上传营业执照影印件");
+				}else if(this.addObj.service_subject_id == ''){
+					this.$message.warning("请选择综合服务主体");
 				}else if(this.addObj.contacts_name == ''){
 					this.$message.warning("请输入联系人姓名");
 				}else if(this.addObj.contacts_phone == ''){
@@ -435,12 +441,18 @@
 					this.$message.warning("请输入姓名");
 				}else if(this.addObj.store_admin_phone == ''){
 					this.$message.warning("请输入手机号");
+				}else if(this.addObj.bank_id == ''){
+					this.$message.warning("请选择银行名称");
+				}else if(this.addObj.bank_name == ''){
+					this.$message.warning("请输入开户银行");
 				}else if(this.addObj.bank_no == ''){
 					this.$message.warning("请输入专属账户");
 				}else if(this.addObj.open_bank_account == ''){
 					this.$message.warning("请输入对公账号");
 				}else if(this.addObj.open_bank_name == ''){
 					this.$message.warning("请输入开户银行");
+				}else if(this.addObj.account_manager_id == ''){
+					this.$message.warning("请选择客户经理");
 				}else if(this.addObj.account_manager_phone == ''){
 					this.$message.warning("请输入手机号");
 				}else if(this.addObj.account_manager_email == ''){

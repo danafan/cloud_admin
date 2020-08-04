@@ -8,6 +8,9 @@
 				<el-form-item label="收款户名：">
 					<el-input v-model="req.name" placeholder="请输入"></el-input>
 				</el-form-item>
+				<el-form-item label="商户名称：">
+					<el-input v-model="req.store_name" placeholder="请输入"></el-input>
+				</el-form-item>
 				<el-form-item label="订单创建时间：">
 					<el-date-picker
 					v-model="order_create_date"
@@ -53,6 +56,8 @@
 		<el-table-column width="150" prop="bank_name" label="收款银行名称" align="center">
 		</el-table-column>
 		<el-table-column width="150" prop="sorder_sn" label="商户订单号" align="center">
+		</el-table-column>
+		<el-table-column width="150" prop="store_name" label="商户名称" align="center">
 		</el-table-column>
 		<el-table-column width="150" prop="name" label="收款姓名" align="center">
 		</el-table-column>
@@ -152,6 +157,7 @@
 					pagesize:10,
 					order_id:"",
 					name:"",
+					store_name:"",
 					created_time_start:"",
 					created_time_end:"",	
 					updated_time_start:"",
@@ -238,6 +244,7 @@
 					pagesize:10,
 					order_id:"",
 					name:"",
+					store_name:"",
 					created_time_start:"",
 					created_time_end:"",	
 					updated_time_start:"",

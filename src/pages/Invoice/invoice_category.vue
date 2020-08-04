@@ -174,8 +174,6 @@
 				let req = this.updateMoneyReq;
 				if(req.cate_name == ''){	
 					this.$message.warning("请输入类目名称");
-				}else if(req.remarks == ''){	
-					this.$message.warning("请输入备注");
 				}else{
 					if(this.type == '1'){
 						resource.createInvoice(this.updateMoneyReq).then(res => {

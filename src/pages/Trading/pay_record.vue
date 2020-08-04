@@ -2,6 +2,9 @@
 	<div>
 		<el-card>
 			<el-form :inline="true" size="small" class="demo-form-inline">
+				<el-form-item label="商户名称：">
+					<el-input v-model="req.store_name" placeholder="请输入"></el-input>
+				</el-form-item>
 				<el-form-item label="批次号：">
 					<el-input v-model="req.batch_no" placeholder="请输入"></el-input>
 				</el-form-item>
@@ -37,6 +40,8 @@
 			<el-table-column width="150" fixed prop="add_time" label="订单创建时间" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="batch_no" label="批次号" align="center">
+			</el-table-column>
+			<el-table-column width="150" prop="store_name" label="商户名称" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="pay_method" label="打款通道" align="center">
 			</el-table-column>
@@ -83,6 +88,7 @@
 				req:{
 					page:1,
 					pagesize:10,
+					store_name:"",
 					batch_no:"",
 					batch_status:"0",
 					pay_method:"0",
@@ -152,6 +158,7 @@
 				this.req = {
 					page:1,
 					pagesize:10,
+					store_name:"",
 					batch_no:"",
 					batch_status:"0",
 					pay_method:"0",

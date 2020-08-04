@@ -36,7 +36,7 @@
 			</el-form-item>
 		</el-form>
 		<div class="but">
-			<el-button type="primary" size="small" @click="getList">搜索</el-button>
+			<el-button type="primary" size="small" @click="orderList">搜索</el-button>
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
 		</div>
 		<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
@@ -99,7 +99,7 @@
 					bill_id:"",
 					order_id:"",
 					business_type:"0",
-					io_type:"io_type",
+					io_type:"0",
 					store_name:"",
 					finished_time_start:"",
 					finished_time_end:""
