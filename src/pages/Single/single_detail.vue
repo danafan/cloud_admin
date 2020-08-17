@@ -71,7 +71,6 @@
 	.file{
 		display: flex;
 		img{
-			border:1px solid red;
 			width: 120px;
 			height: 120px;
 		}

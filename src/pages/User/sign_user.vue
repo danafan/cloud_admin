@@ -104,9 +104,8 @@
 							<div class="sign_item" v-for="item in userInfo.sign_info">
 								<div>{{item.service_subject_name}}</div>
 								<div>（{{item.sign_status_desc}}）</div>
-								<div class="sign_but">
-									<img class="down_icon" src="../../assets/down_icon.png">
-									<div>下载签约协议</div>
+								<div class="sign_but" v-if="item.sign_status == 2" @click="lookDetail(item.id)">
+									查看
 								</div>
 							</div>
 							
@@ -291,6 +290,16 @@
 				resource.userList(this.req).then(res => {
 					if(res.data.code == 1){
 						this.dataObj = res.data.data;
+					}else{
+						this.$message.warning(res.data.msg);
+					}
+				})
+			},
+			lookDetail(id){
+				resource.getcontract({id:id,user_id:this.user_id}).then(res => {
+					if(res.data.code == 1){
+						let url = res.data.data;
+						window.open(url)
 					}else{
 						this.$message.warning(res.data.msg);
 					}

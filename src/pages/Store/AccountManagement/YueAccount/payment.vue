@@ -39,12 +39,9 @@
 		</el-table-column>
 		<el-table-column prop="bill_id" label="转账单号" align="center">
 		</el-table-column>
-		<el-table-column label="转账类型" align="center">
-			<template slot-scope="scope">
-				<span>{{scope.row.business_type2 == 1?'银行卡转支付宝':'支付宝转银行卡'}}</span>
-			</template>
-		</el-table-column>
 		<el-table-column prop="money" label="转账金额（元）" align="center">
+		</el-table-column>
+		<el-table-column prop="remark" label="备注" align="center">
 		</el-table-column>
 	</el-table>
 	<div class="page">

@@ -39,8 +39,6 @@
 			</el-table-column>
 			<el-table-column width="150" prop="user_success_bank_money" label="银行卡用户成功收款金额（元）" align="center">
 			</el-table-column>
-			<el-table-column width="150" prop="invoice_title" label="支付宝用户成功收款金额（元）" align="center">
-			</el-table-column>
 			<el-table-column width="150" prop="user_success_alipay_money" label="支付宝用户成功收款金额（元）" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="user_return_money" label="部分退款订单用户实收金额" align="center">

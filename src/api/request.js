@@ -36,9 +36,12 @@ export default {
     }
      //生成签名
      str=str.substring(0,str.length-1)
-     let sign = md5(str);
-     form.append('sign', sign);
+     console.log(str)
 
+     let sign = md5(str);
+
+     form.append('sign', sign);
+    console.log(params)
      return axios.post(`${path}`, form);
    },
    get(path, params={}){

@@ -18,8 +18,8 @@
 			</div>
 			<div class="info_row">
 				<div class="row_item">
-					<div>反馈材料</div>
-					<img style="width: 200px;height: 200px" :src="storeInfoObj.business_license_img">
+					<div>营业执照影印件：</div>
+					<img style="width: 200px;height: 200px;margin-left: 20px" :src="storeInfoObj.business_license_img">
 				</div>
 				<div class="row_item">地区：{{storeInfoObj.area}}</div>
 			</div>
@@ -82,7 +82,7 @@
 				<div class="title_txt">收款账号</div>
 			</div>
 			<div class="info_row">
-				账户名称：{{storeInfoObj.service_subject_name}}
+				账户名称：{{storeInfoObj.service_subject_company_name}}
 			</div>
 			<div class="info_row">
 				开户银行：{{storeInfoObj.bank_name}}
@@ -163,21 +163,9 @@
 						<el-form-item label="姓名：" label-width="220px" required>
 							<el-input v-model="req.store_admin_name"></el-input>
 						</el-form-item>
-						<el-form-item label="手机号：" label-width="220px" required>
-							<el-input v-model="req.store_admin_phone"></el-input>
-						</el-form-item>
 					</el-form>
 					<div class="title">收款账户</div>
 					<el-form size="small" style="width: 100%">
-						<el-form-item label="银行名称：" label-width="220px" required>
-							<el-select v-model="req.bank_id">
-								<el-option v-for="item in bank_list" :key="item.bank_id" :label="item.bank_name" :value="item.bank_id">
-								</el-option>
-							</el-select>
-						</el-form-item>
-						<el-form-item label="开户银行：" label-width="220px" required>
-							<el-input v-model="req.bank_name"></el-input>
-						</el-form-item>
 						<el-form-item label="专属账户：" label-width="220px" required>
 							<el-input v-model="req.bank_no"></el-input>
 						</el-form-item>
@@ -186,9 +174,6 @@
 					<el-form size="small" style="width: 100%">
 						<el-form-item label="对公账号：" label-width="220px" required>
 							<el-input v-model="req.open_bank_account"></el-input>
-						</el-form-item>
-						<el-form-item label="开户银行：" label-width="220px" required>
-							<el-input v-model="req.open_bank_name"></el-input>
 						</el-form-item>
 					</el-form>
 					<div class="title">客户支持</div>
@@ -302,7 +287,6 @@
 				req:{},
 				province_list:[],		//省列表
 				city_list:[],			//市列表
-				bank_list:[],			//收款账户列表
 				admin_list:[],			//客户经理列表
 				service_list:[],		//综合服务主体列表
 				showEdit:false,
@@ -340,7 +324,6 @@
 						this.showEdit = true;
 						let resData = res.data.data;
 						this.req = resData.info;
-						this.bank_list = resData.bank_list;
 						this.admin_list = resData.admin_list;
 						this.service_list = resData.service_list;
 						this.domain = resData.info.domain;
@@ -427,18 +410,10 @@
 					this.$message.warning("请输入邮箱");
 				}else if(this.req.store_admin_name == ''){
 					this.$message.warning("请输入姓名");
-				}else if(this.req.store_admin_phone == ''){
-					this.$message.warning("请输入手机号");
-				}else if(this.req.bank_id == ''){
-					this.$message.warning("请选择银行名称");
-				}else if(this.req.bank_name == ''){
-					this.$message.warning("请输入开户银行");
 				}else if(this.req.bank_no == ''){
 					this.$message.warning("请输入专属账户");
 				}else if(this.req.open_bank_account == ''){
 					this.$message.warning("请输入对公账号");
-				}else if(this.req.open_bank_name == ''){
-					this.$message.warning("请输入开户银行");
 				}else if(this.req.account_manager_id == ''){
 					this.$message.warning("请选择客户经理");
 				}else if(this.req.account_manager_phone == ''){

@@ -20,13 +20,13 @@
 				<el-input v-model="req.order_id" placeholder="请输入"></el-input>
 			</el-form-item>
 			<el-form-item label="业务类型：">
-				<el-select v-model="req.business_type" clearable>
+				<el-select v-model="req.business_type">
 					<el-option v-for="item in channel_list" :key="item.id" :label="item.name" :value="item.id">
 					</el-option>
 				</el-select>
 			</el-form-item>
 			<el-form-item label="收支类型：">
-				<el-select v-model="req.io_type" clearable>
+				<el-select v-model="req.io_type">
 					<el-option v-for="item in order_status" :key="item.id" :label="item.name" :value="item.id">
 					</el-option>
 				</el-select>
@@ -44,7 +44,7 @@
 			</el-table-column>
 			<el-table-column width="150" prop="store_name" label="商户名称" align="center">
 			</el-table-column>
-			<el-table-column width="150" prop="store_id" label="商户ID" align="center">
+			<el-table-column width="150" prop="store_sn" label="商户ID" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="service_subject_name" label="综合服务主体" align="center">
 			</el-table-column>
@@ -54,9 +54,9 @@
 			</el-table-column>
 			<el-table-column width="150" prop="bill_id" label="资金流水号" align="center">
 			</el-table-column>
-			<el-table-column width="150" prop="business_type1" label="业务类型" align="center">
+			<el-table-column width="150" prop="business_desc1" label="业务类型" align="center">
 			</el-table-column>
-			<el-table-column width="150" prop="business_type2" label="业务子类" align="center">
+			<el-table-column width="150" prop="business_desc2" label="业务子类" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="io_type" label="收支类型" align="center">
 			</el-table-column>
@@ -66,7 +66,7 @@
 			</el-table-column>
 			<el-table-column fixed="right" label="操作" align="center">
 				<template slot-scope="scope">
-					<el-button type="text" size="small" @click="cancel(scope.row.bill_id)">取消</el-button>
+					<el-button type="text" size="small" v-if="scope.row.business_type1 == 2" @click="cancel(scope.row.bill_id)">取消</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -158,7 +158,7 @@
 		methods:{
 			//获取列表
 			orderList(){
-				resource.orderList(this.req).then(res => {
+				resource.accountchange(this.req).then(res => {
 					if(res.data.code == 1){
 						this.dataObj = res.data.data;
 					}else{
@@ -175,7 +175,7 @@
 					bill_id:"",
 					order_id:"",
 					business_type:"0",
-					io_type:"io_type",
+					io_type:"0",
 					store_name:"",
 					finished_time_start:"",
 					finished_time_end:""
@@ -185,12 +185,12 @@
 			handleSizeChange(val) {
 				this.req.pagesize = val;
 				//获取列表
-				this.getList();
+				this.orderList();
 			},
 			handleCurrentChange(val) {
 				this.req.page = val;
 				//获取列表
-				this.getList();
+				this.orderList();
 			},
 			//取消
 			cancel(id){
@@ -199,15 +199,15 @@
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					// resource.cancel({order_id:order_id}).then(res => {
-					// 	if(res.data.code == 1){
-					// 		this.$message.success(res.data.msg);
-					// 		//获取列表
-					// 		this.getList();
-					// 	}else{
-					// 		this.$message.warning(res.data.msg);
-					// 	}
-					// })
+					resource.cancelwithdraw({bill_id:id}).then(res => {
+						if(res.data.code == 1){
+							this.$message.success(res.data.msg);
+							//获取列表
+							this.orderList();
+						}else{
+							this.$message.warning(res.data.msg);
+						}
+					})
 				}).catch(() => {
 					this.$message({
 						type: 'info',

@@ -51,6 +51,8 @@
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
 		</div>
 		<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
+			<el-table-column width="150" prop="store_name" label="商户名称：" align="center">
+			</el-table-column>
 			<el-table-column width="150" prop="adjust_id" label="调单流水号" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="created_time" label="创建时间" align="center">
@@ -64,6 +66,13 @@
 			<el-table-column width="150" prop="name" label="收款户名" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="feedback_time" label="反馈时间" align="center">
+			</el-table-column>
+			<el-table-column width="150" prop="feedback_desc" label="反馈说明" align="center">
+			</el-table-column>
+			<el-table-column width="150" label="反馈材料" align="center">
+				<template slot-scope="scope">
+					<img :src="scope.row.feedback_material" style="width: 100px;height: 100px">
+				</template>
 			</el-table-column>
 			<el-table-column width="150" label="状态" align="center">
 				<template slot-scope="scope">

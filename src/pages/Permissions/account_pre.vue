@@ -31,8 +31,8 @@
 			<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
 				<el-table-column width="150" prop="admin_name" label="登录用户名" align="center">
 				</el-table-column>
-				<el-table-column width="150" prop="access_ids" label="角色权限" align="center">
-				</el-table-column>
+				<!-- <el-table-column width="150" prop="access_ids" label="角色权限" align="center">
+				</el-table-column> -->
 				<el-table-column width="150" prop="realname" label="联系人姓名" align="center">
 				</el-table-column>
 				<el-table-column width="150" prop="admin_phone" label="联系人手机号" align="center">

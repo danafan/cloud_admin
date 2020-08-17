@@ -1,109 +1,29 @@
 <template>
 	<div class="box">
 		<el-container style="height:100%">
-			<el-aside style="width=200px">
+			<el-aside>
 				<div class="gxk">账户综合服务总后台</div>
 				<el-menu
 				:default-active="activeIndex"
-				:router="true"
 				class="el-menu-vertical-demo"
-				background-color="#545c64"
-				text-color="#fff"
-				active-text-color="#fff">
+				background-color="#ffffff"
+				active-text-color="#fff"
+				text-color="#333333"
+				:unique-opened="true"
+				:router="true"
+				@select="handleSelect"
+				>
 				<el-menu-item index="/index">
 					<i class="el-icon-menu"></i>
 					<span slot="title">首页</span>
 				</el-menu-item>
-				<el-submenu index="1">
+				<el-submenu :index="index.toString()" v-for="(item,index) in menuList">
 					<template slot="title">
-						<i class="el-icon-menu"></i>
-						<span>交易管理</span>
+						<i :class="`el-icon-${item.icon}`"></i>
+						<span>{{item.menu_name}}</span>
 					</template>
-					<el-menu-item-group>
-						<el-menu-item index="/trade_order">交易订单</el-menu-item>
-						<el-menu-item index="/receipt">电子回单</el-menu-item>
-						<el-menu-item index="/hang_order">挂起订单</el-menu-item>
-						<el-menu-item index="/pay_record">批量打款记录</el-menu-item>
-						<el-menu-item index="/money_record">资金流水</el-menu-item>
-					</el-menu-item-group>
-				</el-submenu>
-				<el-submenu index="2">
-					<template slot="title">
-						<i class="el-icon-menu"></i>
-						<span>调单记录</span>
-					</template>
-					<el-menu-item-group>
-						<el-menu-item index="/single">调单记录</el-menu-item>
-					</el-menu-item-group>
-				</el-submenu>
-				<el-submenu index="5">
-					<template slot="title">
-						<i class="el-icon-menu"></i>
-						<span>发票管理</span>
-					</template>
-					<el-menu-item-group>
-						<el-menu-item index="/invoice_category">发票类目</el-menu-item>
-						<el-menu-item index="/invoice_record">发票记录</el-menu-item>
-						<el-menu-item index="/have_invoice">已开发票</el-menu-item>
-					</el-menu-item-group>
-				</el-submenu>
-				<el-submenu index="6">
-					<template slot="title">
-						<i class="el-icon-menu"></i>
-						<span>用户管理</span>
-					</template>
-					<el-menu-item-group>
-						<el-menu-item index="/sign_user">签约用户</el-menu-item>
-					</el-menu-item-group>
-				</el-submenu>
-				<el-submenu index="7">
-					<template slot="title">
-						<i class="el-icon-menu"></i>
-						<span>商户管理</span>
-					</template>
-					<el-menu-item-group>
-						<el-menu-item index="/store_list">商户列表</el-menu-item>
-						<el-menu-item index="/store_data">商户数据</el-menu-item>
-						<el-menu-item index="/associated">关联列表</el-menu-item>
-					</el-menu-item-group>
-				</el-submenu>
-				<el-submenu index="8">
-					<template slot="title">
-						<i class="el-icon-menu"></i>
-						<span>税务管理</span>
-					</template>
-					<el-menu-item-group>
-						<el-menu-item index="/deductions_record">个税扣缴明细</el-menu-item>
-					</el-menu-item-group>
-				</el-submenu>
-				<el-submenu index="9">
-					<template slot="title">
-						<i class="el-icon-menu"></i>
-						<span>消息管理</span>
-					</template>
-					<el-menu-item-group>
-						<el-menu-item index="/correspondence">函件通知</el-menu-item>
-						<el-menu-item index="/system">系统公告</el-menu-item>
-					</el-menu-item-group>
-				</el-submenu>
-				<el-submenu index="10">
-					<template slot="title">
-						<i class="el-icon-menu"></i>
-						<span>系统设置</span>
-					</template>
-					<el-menu-item-group>
-						<el-menu-item index="/basic_set">基本设置</el-menu-item>
-						<el-menu-item index="/ervice_subject">综合服务主体</el-menu-item>
-					</el-menu-item-group>
-				</el-submenu>
-				<el-submenu index="11">
-					<template slot="title">
-						<i class="el-icon-menu"></i>
-						<span>权限管理</span>
-					</template>
-					<el-menu-item-group>
-						<el-menu-item index="/account_pre">账号管理</el-menu-item>
-						<el-menu-item index="/management">权限管理</el-menu-item>
+					<el-menu-item-group>     
+						<el-menu-item :index="`/${menu.web_url}`" v-for="menu in item.menu2">{{menu.menu_name}}</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>
 			</el-menu>
@@ -135,14 +55,14 @@
 	width: 100%;
 	height: 100%;
 	.gxk{
-		background: #00152A;
+		background: #fff;
 		width: 256px;
 		height: 64px;
 		display:flex;
 		align-items: center;
 		justify-content: center;
 		font-size: 18px;
-		color: #fff;
+		color: #333;
 	}
 	.header{
 		width: 100%;
@@ -178,15 +98,11 @@
 	.el-menu-item.is-active {
 		background:#008DFF !important;
 	}
-	.el-submenu__title{
-		background-color: #00152A !important;
-	}
 	.el-aside{
-		background:#00152A !important;
+		background:#fff !important;
 	}
 	.el-menu{
 		border: none !important;	
-		background-color: #00152A !important;
 	}
 	.main{
 		background: #F0F2F5;
@@ -202,7 +118,8 @@
 			return{
 				activeIndex:"",
 				admin_name:"",
-				crumb:"首页"
+				crumb:"首页",
+				menuList:[]
 			}
 		},
 		created(){
@@ -227,6 +144,8 @@
 				this.activeIndex = tab;
 			}
 			this.crumb = this.$route.name;
+			//获取我的菜单列表
+			this.getMenuList();
 		},	
 		watch:{
 			$route(n){
@@ -235,6 +154,26 @@
 			}
 		},
 		methods:{
+			//获取我的菜单列表
+			getMenuList(){
+				resource.getmainmenus().then(res => {
+					if(res.data.code == 1){
+						this.menuList = res.data.data;
+					}else{
+						this.$message.warning(res.data.msg);
+					}
+				}).then(() => {
+					let tab = sessionStorage.getItem("tab");
+					if(!tab){
+						let page = `/${this.menuList[0].menu2[0].web_url}`;
+						this.activeIndex = page;
+						this.$router.push(page);
+					}else{
+						this.activeIndex = tab;
+						this.$router.push(tab);
+					}
+				})
+			},
 			handleSelect(index){
 				if(index == '/trade_order' || index == '/order_detail'){
 					this.activeIndex = '/trade_order';

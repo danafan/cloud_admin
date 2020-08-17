@@ -1,15 +1,20 @@
 import http from './request.js'
 let path = {	
+	getmainmenus:'admin/mymenulist',					//获取所有主菜单
 	login:'admin/login',										//登录
 	quit:'admin/quit',											//退出登录
 	index:"index",												//账户概览和待处理事务
 	orderList:'order/list',										//交易订单
+	accountchange:'storebill/accountchange',					//资金流水
+	getsignenterprise:'servicesubject/getsignenterprise',		//查看签约企业
+	getcontract:'user/getcontract',								//查看用户已签约的协议
 	receiptList:'order/receiptlist',							//电子回单
 	hangList:'order/hanglist',									//挂起订单
 	batchInfo:'order/batchinfo',								//获取批次信息（第二步）
 	batchOrderList:'order/batchorderlist',						//批次订单列表（第二步下面）
 	batchList:'order/batchlist',								//批量打款记录
 	cancel:'order/cancel',										//取消打款
+	cancelwithdraw:'storebill/cancelwithdraw',					//取消提现
 	editOrder:'order/edit',										//修改信息
 	editPayMoney:'order/editpaymoney',							//修改打款金额
 	orderDetail:'order/detail',									//订单详情
@@ -86,6 +91,10 @@ let path = {
 
 }				
 export default{
+	//获取所有主菜单
+	getmainmenus(params){
+		return http.get(path.getmainmenus, params)
+	},
 	//登录
 	login(params){
 		return http.post(path.login, params)
@@ -101,6 +110,18 @@ export default{
 	//交易订单
 	orderList(params){
 		return http.get(path.orderList, params)
+	},
+	//资金流水
+	accountchange(params){
+		return http.get(path.accountchange, params)
+	},
+	//查看签约企业
+	getsignenterprise(params){
+		return http.get(path.getsignenterprise, params)
+	},
+	//查看用户已签约的协议
+	getcontract(params){
+		return http.get(path.getcontract, params)
 	},
 	//电子回单
 	receiptList(params){
@@ -125,6 +146,10 @@ export default{
 	//取消打款
 	cancel(params){
 		return http.post(path.cancel, params)
+	},
+	//取消提现
+	cancelwithdraw(params){
+		return http.post(path.cancelwithdraw, params)
 	},
 	//修改信息
 	editOrder(params){

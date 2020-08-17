@@ -24,15 +24,15 @@
 				</el-table-column>
 				<el-table-column width="150" prop="bank_balance" label="银行卡余额（元）" align="center">
 				</el-table-column>
-				<el-table-column width="150" prop="wx_balance" label="微信余额（元）" align="center">
+				<el-table-column width="150" prop="alipay_balance" label="支付宝余额（元）" align="center">
 				</el-table-column>
 				<el-table-column width="150" prop="service_balance" label="服务费账户（元）" align="center">
 				</el-table-column>
 				<el-table-column width="150" prop="store_sn" label="商户ID" align="center">
 				</el-table-column>
-				<el-table-column width="150" prop="contacts_phone" label="联系人手机号" align="center">
+				<el-table-column width="150" prop="contacts_name" label="联系人姓名" align="center">
 				</el-table-column>
-				<el-table-column width="150" prop="open_bank_name" label="开户名称" align="center">
+				<el-table-column width="150" prop="contacts_phone" label="联系人手机号" align="center">
 				</el-table-column>
 				<el-table-column width="150" prop="open_bank_account" label="对公账号" align="center">
 				</el-table-column>
@@ -66,23 +66,23 @@
 		</div>
 	</el-card>
 	<!-- 创建商户 -->
-		<el-dialog title="创建" :visible.sync="showEdit">
-			<div class="box">
-				<div style="width: 50%">
-					<div class="title">基本信息</div>
-					<el-form size="small" style="width: 100%">
-						<el-form-item label="企业名称" label-width="220px" required>
-							<el-input v-model="addObj.enterprise_name"></el-input>
-						</el-form-item>
-						<el-form-item label="社会统一信用代码：" label-width="220px" required>
-							<el-input v-model="addObj.business_license_sn"></el-input>
-						</el-form-item>
-						<el-form-item label="商户名称：" label-width="220px" required>
-							<el-input v-model="addObj.store_name"></el-input>
-						</el-form-item>
-						<el-form-item label="地区：" label-width="220px" required>
-							<div style="display: flex">
-								<el-select v-model="addObj.area_province_id" @change="changeProvince">
+	<el-dialog title="创建" :visible.sync="showEdit">
+		<div class="box">
+			<div style="width: 50%">
+				<div class="title">基本信息</div>
+				<el-form size="small" style="width: 100%">
+					<el-form-item label="企业名称" label-width="220px" required>
+						<el-input v-model="addObj.enterprise_name"></el-input>
+					</el-form-item>
+					<el-form-item label="社会统一信用代码：" label-width="220px" required>
+						<el-input v-model="addObj.business_license_sn"></el-input>
+					</el-form-item>
+					<el-form-item label="商户名称：" label-width="220px" required>
+						<el-input v-model="addObj.store_name"></el-input>
+					</el-form-item>
+					<el-form-item label="地区：" label-width="220px" required>
+						<div style="display: flex">
+							<el-select v-model="addObj.area_province_id" @change="changeProvince">
 								<el-option v-for="item in province_list" :key="item.id" :label="item.name" :value="item.id">
 								</el-option>
 							</el-select>
@@ -91,103 +91,88 @@
 								</el-option>
 							</el-select>
 
+						</div>
+
+					</el-form-item>
+					<el-form-item label="营业执照影印件：" label-width="220px" required>
+						<div class="showimg" v-if="addObj.business_license_img != ''" @mouseenter="isDel = true" @mouseleave="isDel = false">
+							<img class="img" :src="domain + addObj.business_license_img">
+							<div class="modal" v-if="isDel == true">
+								<img src="../../assets/deleteImg.png" @click="deteleImg">
 							</div>
-							
-						</el-form-item>
-						<el-form-item label="营业执照影印件：" label-width="220px" required>
-							<div class="showimg" v-if="addObj.business_license_img != ''" @mouseenter="isDel = true" @mouseleave="isDel = false">
-								<img class="img" :src="domain + addObj.business_license_img">
-								<div class="modal" v-if="isDel == true">
-									<img src="../../assets/deleteImg.png" @click="deteleImg">
-								</div>
-							</div>
-							<upload-file @callbackFn="callbackFn" v-else></upload-file>
-						</el-form-item>
-						<el-form-item label="综合服务主体：" label-width="220px" required>
-							<el-select v-model="addObj.service_subject_id">
-								<el-option v-for="item in service_list" :key="item.id" :label="item.name" :value="item.id">
-								</el-option>
-							</el-select>
-						</el-form-item>
-					</el-form>
-					<div class="title">联系信息</div>
-					<el-form size="small" style="width: 100%">
-						<el-form-item label="联系人姓名：" label-width="220px" required>
-							<el-input v-model="addObj.contacts_name"></el-input>
-						</el-form-item>
-						<el-form-item label="联系人手机号：" label-width="220px" required>
-							<el-input v-model="addObj.contacts_phone"></el-input>
-						</el-form-item>
-						<el-form-item label="联系人邮箱：" label-width="220px" required>
-							<el-input v-model="addObj.contacts_email"></el-input>
-						</el-form-item>
-						<el-form-item label="联系地址：" label-width="220px" required>
-							<el-input v-model="addObj.contacts_address"></el-input>
-						</el-form-item>
-					</el-form>
-				</div>
-				<div style="width: 50%">
-					<div class="title">管理员账号</div>
-					<el-form size="small" style="width: 100%">
-						<el-form-item label="企业登录用户名：" label-width="220px" required>
-							<el-input v-model="addObj.store_admin_phone"></el-input>
-						</el-form-item>
-						<el-form-item label="邮箱：" label-width="220px" required>
-							<el-input v-model="addObj.store_admin_email"></el-input>
-						</el-form-item>
-						<el-form-item label="姓名：" label-width="220px" required>
-							<el-input v-model="addObj.store_admin_name"></el-input>
-						</el-form-item>
-						<el-form-item label="手机号：" label-width="220px" required>
-							<el-input v-model="addObj.store_admin_phone"></el-input>
-						</el-form-item>
-					</el-form>
-					<div class="title">收款账户</div>
-					<el-form size="small" style="width: 100%">
-						<el-form-item label="银行名称：" label-width="220px" required>
-							<el-select v-model="addObj.bank_id">
-								<el-option v-for="item in bank_list" :key="item.bank_id" :label="item.bank_name" :value="item.bank_id">
-								</el-option>
-							</el-select>
-						</el-form-item>
-						<el-form-item label="开户银行：" label-width="220px" required>
-							<el-input v-model="addObj.bank_name"></el-input>
-						</el-form-item>
-						<el-form-item label="专属账户：" label-width="220px" required>
-							<el-input v-model="addObj.bank_no"></el-input>
-						</el-form-item>
-					</el-form>
-					<div class="title">结算信息</div>
-					<el-form size="small" style="width: 100%">
-						<el-form-item label="对公账号：" label-width="220px" required>
-							<el-input v-model="addObj.open_bank_account"></el-input>
-						</el-form-item>
-						<el-form-item label="开户银行：" label-width="220px" required>
-							<el-input v-model="addObj.open_bank_name"></el-input>
-						</el-form-item>
-					</el-form>
-					<div class="title">客户支持</div>
-					<el-form size="small" style="width: 100%">
-						<el-form-item label="客户经理：" label-width="220px" required>
-							<el-select v-model="addObj.account_manager_id">
-								<el-option v-for="item in admin_list" :key="item.admin_id" :label="item.store_admin_name" :value="item.admin_id">
-								</el-option>
-							</el-select>
-						</el-form-item>
-						<el-form-item label="手机号：" label-width="220px" required>
-							<el-input v-model="addObj.account_manager_phone"></el-input>
-						</el-form-item>
-						<el-form-item label="邮箱：" label-width="220px" required>
-							<el-input v-model="addObj.account_manager_email"></el-input>
-						</el-form-item>
-					</el-form>
-				</div>
+						</div>
+						<upload-file @callbackFn="callbackFn" v-else></upload-file>
+					</el-form-item>
+					<el-form-item label="综合服务主体：" label-width="220px" required>
+						<el-select v-model="addObj.service_subject_id">
+							<el-option v-for="item in service_list" :key="item.id" :label="item.name" :value="item.id">
+							</el-option>
+						</el-select>
+					</el-form-item>
+				</el-form>
+				<div class="title">联系信息</div>
+				<el-form size="small" style="width: 100%">
+					<el-form-item label="联系人姓名：" label-width="220px" required>
+						<el-input v-model="addObj.contacts_name"></el-input>
+					</el-form-item>
+					<el-form-item label="联系人手机号：" type="number" label-width="220px" required>
+						<el-input v-model="addObj.contacts_phone"></el-input>
+					</el-form-item>
+					<el-form-item label="联系人邮箱：" label-width="220px" required>
+						<el-input v-model="addObj.contacts_email"></el-input>
+					</el-form-item>
+					<el-form-item label="联系地址：" label-width="220px" required>
+						<el-input v-model="addObj.contacts_address"></el-input>
+					</el-form-item>
+				</el-form>
 			</div>
-			<div slot="footer" class="dialog-footer">
-				<el-button @click="showEdit = false">取 消</el-button>
-				<el-button type="primary" @click="submit">确 定</el-button>
+			<div style="width: 50%">
+				<div class="title">管理员账号</div>
+				<el-form size="small" style="width: 100%">
+					<el-form-item label="企业登录用户名：" label-width="220px" required>
+						<el-input v-model="addObj.store_admin_phone"></el-input>
+					</el-form-item>
+					<el-form-item label="邮箱：" label-width="220px" required>
+						<el-input v-model="addObj.store_admin_email"></el-input>
+					</el-form-item>
+					<el-form-item label="姓名：" label-width="220px" required>
+						<el-input v-model="addObj.store_admin_name"></el-input>
+					</el-form-item>
+				</el-form>
+				<div class="title">收款账户</div>
+				<el-form size="small" style="width: 100%">
+					<el-form-item label="专属账户：" type="number" label-width="220px" required>
+						<el-input v-model="addObj.bank_no"></el-input>
+					</el-form-item>
+				</el-form>
+				<div class="title">结算信息</div>
+				<el-form size="small" style="width: 100%">
+					<el-form-item label="对公账号：" type="number" label-width="220px" required>
+						<el-input v-model="addObj.open_bank_account"></el-input>
+					</el-form-item>
+				</el-form>
+				<div class="title">客户支持</div>
+				<el-form size="small" style="width: 100%">
+					<el-form-item label="客户经理：" label-width="220px" required>
+						<el-select v-model="addObj.account_manager_id">
+							<el-option v-for="item in admin_list" :key="item.admin_id" :label="item.store_admin_name" :value="item.admin_id">
+							</el-option>
+						</el-select>
+					</el-form-item>
+					<el-form-item label="手机号：" type="number" label-width="220px" required>
+						<el-input v-model="addObj.account_manager_phone"></el-input>
+					</el-form-item>
+					<el-form-item label="邮箱：" label-width="220px" required>
+						<el-input v-model="addObj.account_manager_email"></el-input>
+					</el-form-item>
+				</el-form>
 			</div>
-		</el-dialog>
+		</div>
+		<div slot="footer" class="dialog-footer">
+			<el-button @click="showEdit = false">取 消</el-button>
+			<el-button type="primary" @click="submit">确 定</el-button>
+		</div>
+	</el-dialog>
 
 </div>
 </template>
@@ -270,7 +255,6 @@
 				addObj:{},
 				province_list:[],		//省列表
 				city_list:[],			//市列表
-				bank_list:[],			//收款账户列表
 				admin_list:[],			//客户经理列表
 				service_list:[],		//综合服务主体列表
 				showEdit:false,
@@ -352,7 +336,6 @@
 						this.showEdit = true;
 						let resData = res.data.data;
 						this.addObj = resData.info;
-						this.bank_list = resData.bank_list;
 						this.admin_list = resData.admin_list;
 						this.service_list = resData.service_list;
 						this.domain = resData.info.domain;
@@ -439,18 +422,10 @@
 					this.$message.warning("请输入邮箱");
 				}else if(this.addObj.store_admin_name == ''){
 					this.$message.warning("请输入姓名");
-				}else if(this.addObj.store_admin_phone == ''){
-					this.$message.warning("请输入手机号");
-				}else if(this.addObj.bank_id == ''){
-					this.$message.warning("请选择银行名称");
-				}else if(this.addObj.bank_name == ''){
-					this.$message.warning("请输入开户银行");
 				}else if(this.addObj.bank_no == ''){
 					this.$message.warning("请输入专属账户");
 				}else if(this.addObj.open_bank_account == ''){
 					this.$message.warning("请输入对公账号");
-				}else if(this.addObj.open_bank_name == ''){
-					this.$message.warning("请输入开户银行");
 				}else if(this.addObj.account_manager_id == ''){
 					this.$message.warning("请选择客户经理");
 				}else if(this.addObj.account_manager_phone == ''){

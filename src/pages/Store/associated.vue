@@ -201,7 +201,7 @@
 				}else{
 					var req = {
 						store_ids:this.checkList.join(','),
-						remark:this.addObj.remark
+						remark:this.remark
 					}
 					if(this.type == '1'){
 						resource.addrelation(req).then(res => {

@@ -312,10 +312,10 @@
 					this.$message.warning("请输入合同编号");
 				}else if(!this.req.contract_name || this.req.contract_name == ''){
 					this.$message.warning("请输入合同名称");
-				}else if(this.date.length == 0){
+				}else if(!this.date || this.date.length == 0){
 					this.$message.warning("请输入合同有效期");
-				}else if(this.req.default_rate == '' || this.req.money1 == '' ||this.req.money2 == '' ||this.req.money3 == '' || this.req.rate1 == '' || this.req.rate2 == '' || this.req.rate3 == ''){
-					this.$message.warning("请完善计费模式");
+				}else if(!this.judgmentMoney.test(this.req.default_rate) || !this.judgmentMoney.test(this.req.money1) || !this.judgmentMoney.test(this.req.money2) || !this.judgmentMoney.test(this.req.money3) || !this.judgmentMoney.test(this.req.rate1) || !this.judgmentMoney.test(this.req.rate2) || !this.judgmentMoney.test(this.req.rate3)){
+					this.$message.warning("请输入正确的费率格式");
 				}else{
 					this.req.store_id = this.store_id;
 					if(this.black_list[0].username != '' && this.black_list[0].identity_card != ''){

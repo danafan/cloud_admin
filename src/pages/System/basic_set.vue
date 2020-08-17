@@ -203,6 +203,8 @@
 			submit(){
 				if(this.reqstoreInfoObj.person_month_limit == ''){
 					this.$message.warning("请输入限额信息");
+				}else if(this.reqstoreInfoObj.person_month_limit < 0){
+					this.$message.warning("限额信息必须大于0");
 				}else{
 					resource.editmoneylimit({person_month_limit:this.reqstoreInfoObj.person_month_limit}).then(res => {
 						if(res.data.code == 1){

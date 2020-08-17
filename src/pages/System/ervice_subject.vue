@@ -20,6 +20,7 @@
 				<el-table-column width="150" label="操作" align="center">
 					<template slot-scope="scope">
 						<el-button type="text" size="small" @click="edit(scope.row.id)" v-if="scope.row.info_status == 3">编辑</el-button>
+						<el-button type="text" size="small" @click="look(scope.row.id)" v-if="scope.row.info_status == 3">查看签约企业</el-button>
 						<el-button type="text" size="small" @click="perfect(scope.row.id,scope.row.info_status)" v-else>去完善</el-button>
 					</template>
 				</el-table-column>
@@ -96,6 +97,13 @@
 			<el-button type="primary" @click="next" v-if="step == 1 || step == 2">下一步</el-button>
 			<el-button @click="showEdit = false"  v-if="step == 3">取 消</el-button>
 			<el-button type="primary" @click="submit" v-if="step == 3">确 定</el-button>
+		</div>
+	</el-dialog>
+	<!-- 签约企业 -->
+	<el-dialog title="签约企业" :visible.sync="showSign">
+		<div>{{signList}}</div>
+		<div slot="footer" class="dialog-footer">
+			<el-button type="primary" @click="showSign = false">确 定</el-button>
 		</div>
 	</el-dialog>
 
@@ -233,6 +241,8 @@
 				fileName:"",
 				type:"1",			//1:添加；2:编辑
 				id:"",
+				showSign:false,
+				signList:''
 			}
 		},
 		created(){
@@ -245,6 +255,17 @@
 				resource.ervicesubject(this.req).then(res => {
 					if(res.data.code == 1){
 						this.dataObj = res.data.data;
+					}else{
+						this.$message.warning(res.data.msg);
+					}
+				})
+			},
+			//查看签约企业
+			look(id){
+				resource.getsignenterprise({id:id}).then(res => {
+					if(res.data.code == 1){
+						this.showSign = true;
+					    this.signList = res.data.data;
 					}else{
 						this.$message.warning(res.data.msg);
 					}

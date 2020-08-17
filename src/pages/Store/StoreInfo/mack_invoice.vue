@@ -240,6 +240,7 @@
 						})
 					})
 					this.req.cate_ids_name = cate_ids_name_list.join(',');
+					this.req.store_id = this.store_id;
 					resource.addEditInvoicePost(this.req).then(res => {
 						if(res.data.code == 1){
 							this.showEdit = false;
