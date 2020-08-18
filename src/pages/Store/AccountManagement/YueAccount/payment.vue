@@ -100,6 +100,7 @@
 		methods:{
 			//获取列表
 			getList(){
+				this.req.store_id = this.store_id;
 				resource.transFerrecord(this.req).then(res => {
 					if(res.data.code == 1){
 						this.dataObj = res.data.data;

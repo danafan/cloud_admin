@@ -39,9 +39,9 @@
 		<el-button type="primary" size="small" @click="reset">重置</el-button>
 	</div>
 	<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
-		<el-table-column width="150" fixed prop="created_time" label="创建时间" align="center">
+		<el-table-column width="180" fixed prop="created_time" label="创建时间" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="updated_time" label="更新时间" align="center">
+		<el-table-column width="180" prop="updated_time" label="更新时间" align="center">
 		</el-table-column>
 		<el-table-column width="150" label="签约信息" align="center">
 			<template slot-scope="scope">
@@ -53,13 +53,13 @@
 		</el-table-column>
 		<el-table-column width="150" prop="name" label="用户姓名" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="id_card_no" label="证件号码" align="center">
+		<el-table-column width="200" prop="id_card_no" label="证件号码" align="center">
 		</el-table-column>
 		<el-table-column width="150" prop="phone" label="预签约手机号" align="center">
 		</el-table-column>
 		<el-table-column width="150" prop="overseas_user" label="是否是海外或港澳台用户" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="sign_overdue_time" label="到期时间" align="center">
+		<el-table-column width="180" prop="sign_overdue_time" label="到期时间" align="center">
 		</el-table-column>
 		<el-table-column fixed="right" label="操作" align="center">
 			<template slot-scope="scope">

@@ -34,7 +34,7 @@
 				</el-table-column>
 				<el-table-column width="150" prop="contacts_phone" label="联系人手机号" align="center">
 				</el-table-column>
-				<el-table-column width="150" prop="open_bank_account" label="对公账号" align="center">
+				<el-table-column width="240" prop="open_bank_account" label="对公账号" align="center">
 				</el-table-column>
 				<el-table-column width="150" prop="account_manager_name" label="客户经理" align="center">
 				</el-table-column>
@@ -43,7 +43,7 @@
 						{{scope.row.status == '2'?'信息未完善':'信息已完善'}}
 					</template>
 				</el-table-column>
-				<el-table-column fixed="right" label="操作" align="center">
+				<el-table-column width="200" fixed="right" label="操作" align="center">
 					<template slot-scope="scope">
 						<el-button type="text" size="small" @click="look(scope.row.store_id)" v-if="scope.row.status == '1'">查看账户</el-button>
 						<el-button type="text" size="small" @click="editStore(scope.row.store_id)" v-if="scope.row.status == '1' || scope.row.status == '2'">{{scope.row.status == '2'?'去完善':'修改'}}

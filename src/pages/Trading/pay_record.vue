@@ -37,7 +37,7 @@
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
 		</div>
 		<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
-			<el-table-column width="150" fixed prop="add_time" label="订单创建时间" align="center">
+			<el-table-column width="180" prop="add_time" label="订单创建时间" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="batch_no" label="批次号" align="center">
 			</el-table-column>

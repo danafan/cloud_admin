@@ -5,19 +5,19 @@
 			<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
 				<el-table-column width="150" prop="name" label="综合服务主体" align="center">
 				</el-table-column>
-				<el-table-column width="150" prop="enterprise_name" label="企业名称" align="center">
+				<el-table-column width="200" prop="enterprise_name" label="企业名称" align="center">
 				</el-table-column>
 				<el-table-column width="150" prop="operator" label="经办人姓名" align="center">
 				</el-table-column>
 				<el-table-column width="150" prop="operator_phone" label="经办人手机号" align="center">
 				</el-table-column>
-				<el-table-column width="150" prop="enterprise_no" label="统一社会信用代码" align="center">
+				<el-table-column width="200" prop="enterprise_no" label="统一社会信用代码" align="center">
 				</el-table-column>
-				<el-table-column width="150" prop="sign_protocol_name" label="协议文件" align="center">
+				<el-table-column width="300" prop="sign_protocol_name" label="协议文件" align="center">
 				</el-table-column>
-				<el-table-column width="150" prop="sign_enterprises" label="签约企业名称" align="center">
+				<el-table-column width="200" prop="sign_enterprises" label="签约企业名称" align="center">
 				</el-table-column>
-				<el-table-column width="150" label="操作" align="center">
+				<el-table-column width="150" label="操作" align="center" fixed="right">
 					<template slot-scope="scope">
 						<el-button type="text" size="small" @click="edit(scope.row.id)" v-if="scope.row.info_status == 3">编辑</el-button>
 						<el-button type="text" size="small" @click="look(scope.row.id)" v-if="scope.row.info_status == 3">查看签约企业</el-button>

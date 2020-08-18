@@ -5,13 +5,13 @@
 				<el-button type="primary" icon="el-icon-download" size="small" @click="addAccess">添加权限</el-button>
 			</div>
 			<el-table :data="dataObj.data" border style="width: 100%" align="center" :header-cell-style="{'background':'#f4f4f4'}">
-				<el-table-column prop="access_name" label="名称" align="center">
+				<el-table-column width="150" prop="access_name" label="名称" align="center">
 				</el-table-column>
-				<el-table-column prop="menu_name" label="所属分组" align="center">
+				<el-table-column width="150" prop="menu_name" label="所属分组" align="center">
 				</el-table-column>
 				<el-table-column prop="access_codes" label="权限码" align="center">
 				</el-table-column>
-				<el-table-column label="操作" align="center">
+				<el-table-column width="150" label="操作" align="center">
 					<template slot-scope="scope">
 						<el-button type="text" size="small" @click="edior(scope.row.id)">编辑</el-button>
 						<el-button type="text" size="small" @click="deleteIs(scope.row.id)">删除</el-button>

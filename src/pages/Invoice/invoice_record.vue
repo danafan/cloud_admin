@@ -34,7 +34,7 @@
 			</el-table-column>
 			<el-table-column width="150" prop="total_price_tax" label="价税合计总额（元）" align="center">
 			</el-table-column>
-			<el-table-column width="150" prop="add_time" label="发票申请时间" align="center">
+			<el-table-column width="180" prop="add_time" label="发票申请时间" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="status" label="状态" align="center">
 				<template slot-scope="scope">

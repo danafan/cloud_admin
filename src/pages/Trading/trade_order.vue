@@ -60,9 +60,9 @@
 		<el-button type="primary" size="small" @click="reset">重置</el-button>
 	</div>
 	<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
-		<el-table-column width="150" fixed prop="created_time" label="订单创建时间" align="center">
+		<el-table-column width="180" prop="created_time" label="订单创建时间" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="updated_time" label="最后更改时间" align="center">
+		<el-table-column width="180" prop="updated_time" label="最后更改时间" align="center">
 		</el-table-column>
 		<el-table-column width="150" prop="batch_no" label="批次号" align="center">
 		</el-table-column>
@@ -84,9 +84,9 @@
 		</el-table-column>
 		<el-table-column width="150" prop="name" label="收款姓名" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="id_card_no" label="证件号码" align="center">
+		<el-table-column width="200" prop="id_card_no" label="证件号码" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="bank_card_no" label="收款账号" align="center">
+		<el-table-column width="200" prop="bank_card_no" label="收款账号" align="center">
 		</el-table-column>
 		<el-table-column width="150" prop="bank_phone" label="银行预留手机号" align="center">
 		</el-table-column>
@@ -98,9 +98,9 @@
 		</el-table-column>
 		<el-table-column width="150" prop="remark" label="打款备注" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="finished_time" label="订单完成时间" align="center">
+		<el-table-column width="180" prop="finished_time" label="订单完成时间" align="center">
 		</el-table-column>
-		<el-table-column width="150" label="订单状态" align="center">
+		<el-table-column width="260" label="订单状态" align="center" fixed="right">
 			<template slot-scope="scope">
 				<span>{{scope.row.order_status1 | orderStatus(order_status)}}</span>
 				<div style="color: red" v-if="scope.row.order_status1 == 2">{{scope.row.order_status2 | orderStatus2}}</div>
@@ -122,45 +122,6 @@
 	</el-pagination>
 </div>
 </el-card>
-<!-- 修改信息 -->
-<el-dialog title="修改信息" :visible.sync="updateInfo">
-	<el-form size="small" style="width: 60%;margin: 0 auto">
-		<el-form-item label="姓名" label-width="180px" required>
-			<el-input v-model="updateInfoReq.name"></el-input>
-		</el-form-item>
-		<el-form-item label="收款账号" label-width="180px" required>
-			<el-input v-model="updateInfoReq.id_card_no"></el-input>
-		</el-form-item>
-		<el-form-item label="证件号码" label-width="180px" required>
-			<el-input v-model="updateInfoReq.bank_card_no"></el-input>
-		</el-form-item>
-	</el-form>
-	<div slot="footer" class="dialog-footer">
-		<el-button @click="updateInfo = false">取 消</el-button>
-		<el-button type="primary" @click="subUpdateInfo">确 定</el-button>
-	</div>
-</el-dialog>
-<!-- 修改金额 -->
-<el-dialog title="修改金额" :visible.sync="updateMoney">
-	<el-form size="small" style="width: 60%;margin: 0 auto">
-		<el-form-item label="全网单人月累计金额限制(元)：" required>
-			<span>10000</span>
-		</el-form-item>
-		<el-form-item label="本月已打款金额（元）：" required>
-			<span>10000</span>
-		</el-form-item>
-		<el-form-item label="本月可打款金额（元）：" required>
-			<span>10000</span>
-		</el-form-item>
-		<el-form-item label="打款金额" label-width="180px" required>
-			<el-input v-model="updateMoneyReq.pay_money"></el-input>
-		</el-form-item>
-	</el-form>
-	<div slot="footer" class="dialog-footer">
-		<el-button @click="updateMoney = false">取 消</el-button>
-		<el-button type="primary" @click="subUpdateMoney">确 定</el-button>
-	</div>
-</el-dialog>
 </div>
 </template>
 <style lang="less" scoped>
@@ -233,16 +194,6 @@
 				order_create_date:[],	//订单创建时间
 				update_date:[],			//最后更新时间
 				dataObj:{},				//列表信息
-				updateInfo:false,		//默认修改信息弹框不显示
-				updateInfoReq:{
-					name:"",
-					id_card_no:"",
-					bank_card_no:""
-				},						//修改信息
-				updateMoney:false,		//默认修改金额不显示
-				updateMoneyReq:{
-					pay_money:""
-				},						//修改打款金额
 				order_id:""
 			}
 		},

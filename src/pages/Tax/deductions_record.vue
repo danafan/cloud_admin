@@ -29,14 +29,14 @@
 			</el-table-column>
 			<el-table-column width="150" prop="service_subject_name" label="综合服务主体" align="center">
 			</el-table-column>
-			<el-table-column width="150" prop="store_name" label="扣缴明细名称" align="center">
+			<el-table-column prop="store_name" label="扣缴明细名称" align="center">
 				<template slot-scope="scope">
 					<span>{{scope.row.service_subject_name + '_' + scope.row.store_name}}_个人所得税扣款明细表</span>
 				</template>
 			</el-table-column>
-			<el-table-column width="150" prop="email" label="接收扣缴明细解压密码邮箱" align="center">
+			<el-table-column width="200" prop="email" label="接收扣缴明细解压密码邮箱" align="center">
 			</el-table-column>
-			<el-table-column width="150" label="下载状态" align="center">
+			<el-table-column fixed="right" width="150" label="下载状态" align="center">
 				<template slot-scope="scope">
 					<span>{{scope.row.status == '0'?'未下载':'已下载'}}</span>
 				</template>

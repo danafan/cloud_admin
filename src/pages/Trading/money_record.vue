@@ -40,7 +40,7 @@
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
 		</div>
 		<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
-			<el-table-column width="150" fixed prop="finished_time" label="入账时间" align="center">
+			<el-table-column width="180" fixed prop="happen_time" label="入账时间" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="store_name" label="商户名称" align="center">
 			</el-table-column>
@@ -56,7 +56,7 @@
 			</el-table-column>
 			<el-table-column width="150" prop="business_desc1" label="业务类型" align="center">
 			</el-table-column>
-			<el-table-column width="150" prop="business_desc2" label="业务子类" align="center">
+			<el-table-column width="200" prop="business_desc2" label="业务子类" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="io_type" label="收支类型" align="center">
 			</el-table-column>

@@ -61,9 +61,6 @@
 				<div class="row_item">开户名称：{{storeInfoObj.enterprise_name}}</div>
 				<div class="row_item">对公账号：{{storeInfoObj.open_bank_account}}</div>
 			</div>
-			<div class="info_row">
-				开户银行：{{storeInfoObj.open_bank_name}}
-			</div>
 		</el-card>
 		<el-card style="margin-top: 24px;">
 			<div class="info_title">

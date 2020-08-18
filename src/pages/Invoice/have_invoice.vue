@@ -31,7 +31,7 @@
 		<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
 			<el-table-column width="150" prop="enterprise_name" label="商户名称" align="center">
 			</el-table-column>
-			<el-table-column width="150" prop="invoice_time" label="开票时间" align="center">
+			<el-table-column width="180" prop="invoice_time" label="开票时间" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="invoice_type" label="开票类型" align="center">
 			</el-table-column>
@@ -66,7 +66,7 @@
 					<div v-for="item in scope.row.child_invoice_json">{{item.totalMoney}}</div>
 				</template>
 			</el-table-column>
-			<el-table-column width="150" label="购买方" align="center">
+			<el-table-column width="300" label="购买方">
 				<template slot-scope="scope">
 					<div>名称：{{scope.row.recieve_user}}</div>
 					<div>纳税人识别号：{{scope.row.taxpayer_id}}</div>

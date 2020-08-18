@@ -43,7 +43,7 @@
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
 		</div>
 		<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
-			<el-table-column width="150" prop="finished_time" label="订单完成时间" align="center">
+			<el-table-column width="180" prop="finished_time" label="订单完成时间" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="batch_no" label="批次号" align="center">
 			</el-table-column>
@@ -61,7 +61,7 @@
 			</el-table-column>
 			<el-table-column width="150" prop="name" label="收款户名" align="center">
 			</el-table-column>
-			<el-table-column width="150" prop="bank_card_no" label="收款账号" align="center">
+			<el-table-column width="200" prop="bank_card_no" label="收款账号" align="center">
 			</el-table-column>
 			<el-table-column width="150" label="状态" align="center">
 				<template slot-scope="scope">

@@ -142,7 +142,7 @@
 					<el-input v-model="item.identity_card" size="small"></el-input>
 				</el-form-item>
 				<div class="add" v-if="index == black_list.length - 1" @click="add(index)">添加</div>
-				<div class="delete" @click="deleteBlack(index)">删除</div>
+				<div class="delete" @click="deleteBlack(index)" v-if="black_list.length > 1 && index != black_list.length - 1">删除</div>
 			</div>
 		</el-form>
 		<div slot="footer" class="dialog-footer">

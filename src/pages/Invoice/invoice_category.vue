@@ -18,16 +18,16 @@
 				<el-button type="primary" size="small" @click="createIn">新建</el-button>
 			</div>
 			<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
-				<el-table-column width="150" prop="cate_name" label="发票类目" align="center">
+				<el-table-column width="180" prop="cate_name" label="发票类目" align="center">
 				</el-table-column>
-				<el-table-column prop="remarks" label="说明" align="center">
+				<el-table-column show-overflow-tooltip prop="remarks" label="说明" align="center">
 				</el-table-column>
-				<el-table-column prop="remarks" label="状态" align="center">
+				<el-table-column width="150" prop="remarks" label="状态" align="center">
 					<template slot-scope="scope">
 						<span>{{scope.row.status == 1?'启用中':'已停用'}}</span>
 					</template>
 				</el-table-column>
-				<el-table-column fixed="right" label="操作" align="center">
+				<el-table-column width="150" label="操作" align="center">
 					<template slot-scope="scope">
 						<el-button type="text" size="small" @click="setting(scope.row.status,scope.row.invoice_cate_id)">{{scope.row.status == 1?'停用':'启用'}}</el-button>
 						<el-button v-if="scope.row.status == 1" type="text" size="small" @click="getUpdateInfo(scope.row.invoice_cate_id,scope.row.cate_name,scope.row.remarks)">编辑</el-button>

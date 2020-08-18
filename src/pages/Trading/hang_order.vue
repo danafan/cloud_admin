@@ -39,9 +39,9 @@
 		<el-button type="primary" size="small" @click="reset">重置</el-button>
 	</div>
 	<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
-		<el-table-column width="150" fixed prop="created_time" label="订单创建时间" align="center">
+		<el-table-column width="180" prop="created_time" label="订单创建时间" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="updated_time" label="最后更改时间" align="center">
+		<el-table-column width="180" prop="updated_time" label="最后更改时间" align="center">
 		</el-table-column>
 		<el-table-column width="150" prop="batch_no" label="批次号" align="center">
 		</el-table-column>
@@ -61,9 +61,9 @@
 		</el-table-column>
 		<el-table-column width="150" prop="name" label="收款姓名" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="id_card_no" label="证件号码" align="center">
+		<el-table-column width="200" prop="id_card_no" label="证件号码" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="bank_card_no" label="收款账号" align="center">
+		<el-table-column width="200" prop="bank_card_no" label="收款账号" align="center">
 		</el-table-column>
 		<el-table-column width="150" prop="bank_phone" label="银行预留手机号" align="center">
 		</el-table-column>
@@ -73,7 +73,7 @@
 		</el-table-column>
 		<el-table-column width="150" prop="remark" label="打款备注" align="center">
 		</el-table-column>
-		<el-table-column width="150" label="订单状态" align="center">
+		<el-table-column width="260" label="订单状态" align="center">
 			<template slot-scope="scope">
 				<span>{{scope.row.order_status1 | orderStatus(order_status)}}</span>
 				<div style="color: red" v-if="scope.row.order_status1 == 2">{{scope.row.order_status2 | orderStatus2}}</div>

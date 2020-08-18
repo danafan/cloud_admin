@@ -63,14 +63,14 @@
 			</el-table-column>
 			<el-table-column width="150" prop="deduction_service_money" label="服务费返点使用总额（元）" align="center">
 			</el-table-column>
-			<el-table-column width="150" prop="store_id" label="商户ID" align="center">
+			<el-table-column width="150" prop="store_sn" label="商户ID" align="center">
 			</el-table-column>
 			<el-table-column width="150" label="C端签约" align="center">
 				<template slot-scope="scope">
 					<span>微信端</span>
 				</template>
 			</el-table-column>
-			<el-table-column width="150" prop="account_manager_id" label="客户经理" align="center">
+			<el-table-column width="150" prop="account_manager_name" label="客户经理" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="apply_id" label="技术对接" align="center">
 				<template slot-scope="scope">

@@ -184,8 +184,8 @@
 			},
 			//提交修改
 			submitBilling(){
-				if(this.reqstoreInfoObj.default_rate == '' || this.reqstoreInfoObj.money1 == '' ||this.reqstoreInfoObj.money2 == '' ||this.reqstoreInfoObj.money3 == '' || this.reqstoreInfoObj.rate1 == '' || this.reqstoreInfoObj.rate2 == '' || this.reqstoreInfoObj.rate3 == ''){
-					this.$message.warning("请完善计费模式");
+				if(!this.judgmentMoney.test(this.reqstoreInfoObj.default_rate) || !this.judgmentMoney.test(this.reqstoreInfoObj.money1) || !this.judgmentMoney.test(this.reqstoreInfoObj.money2) || !this.judgmentMoney.test(this.reqstoreInfoObj.money3) || !this.judgmentMoney.test(this.reqstoreInfoObj.rate1) || !this.judgmentMoney.test(this.reqstoreInfoObj.rate2) || !this.judgmentMoney.test(this.reqstoreInfoObj.rate3)){
+
 				}else{
 					resource.editServicerate(this.reqstoreInfoObj).then(res => {
 						if(res.data.code == 1){

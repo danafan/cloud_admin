@@ -29,17 +29,15 @@
 				</div>
 			</div>
 			<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
-				<el-table-column width="150" prop="admin_name" label="登录用户名" align="center">
+				<el-table-column prop="admin_name" label="登录用户名" align="center">
 				</el-table-column>
-				<!-- <el-table-column width="150" prop="access_ids" label="角色权限" align="center">
-				</el-table-column> -->
-				<el-table-column width="150" prop="realname" label="联系人姓名" align="center">
+				<el-table-column prop="realname" label="联系人姓名" align="center">
 				</el-table-column>
-				<el-table-column width="150" prop="admin_phone" label="联系人手机号" align="center">
+				<el-table-column prop="admin_phone" label="联系人手机号" align="center">
 				</el-table-column>
-				<el-table-column width="150" prop="admin_email" label="联系人邮箱" align="center">
+				<el-table-column prop="admin_email" label="联系人邮箱" align="center">
 				</el-table-column>
-				<el-table-column width="150" label="账号状态" align="center">
+				<el-table-column label="账号状态" align="center">
 					<template slot-scope="scope">
 						<span>{{scope.row.is_disabled == '1'?'已启用':'已停用'}}</span>
 					</template>
