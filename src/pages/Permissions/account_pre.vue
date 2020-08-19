@@ -82,7 +82,7 @@
 			</el-form-item>
 			<el-form-item label="备注" label-width="180px" required>
 				<el-input type="textarea"
-				:rows="3" v-model="updateInfoReq.remark"></el-input>
+				:rows="3" :maxlength="50" v-model="updateInfoReq.remark"></el-input>
 			</el-form-item>
 			<el-form-item :label="`${item.menu_name}：`" v-for="(item,index) in accessList" v-if="is_super != '1' || updateInfoType == '1'">
 				<el-checkbox-group v-model="checkedCities">

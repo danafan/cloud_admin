@@ -54,7 +54,7 @@
 				<el-input v-model="updateMoneyReq.cate_name" placeholder="请输入"></el-input>
 			</el-form-item>
 			<el-form-item label="备注：">
-				<el-input v-model="updateMoneyReq.remarks" type="textarea" :row='3' placeholder="请输入"></el-input>
+				<el-input v-model="updateMoneyReq.remarks" :maxlength="50" type="textarea" :row='3' placeholder="请输入"></el-input>
 			</el-form-item>
 		</el-form>
 		<div slot="footer" class="dialog-footer">

@@ -66,7 +66,7 @@
 			</el-table-column>
 			<el-table-column fixed="right" label="操作" align="center">
 				<template slot-scope="scope">
-					<el-button type="text" size="small" v-if="scope.row.business_type1 == 2" @click="cancel(scope.row.bill_id)">取消</el-button>
+					<el-button type="text" size="small" v-if="scope.row.business_type1 == 2 && scope.row.status == 1" @click="cancel(scope.row.bill_id)">取消</el-button>
 				</template>
 			</el-table-column>
 		</el-table>

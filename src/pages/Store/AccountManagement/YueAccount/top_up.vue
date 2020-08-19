@@ -13,7 +13,7 @@
 			</el-date-picker>
 		</el-form-item>
 		<el-form-item label="资金用途：">
-			<el-select v-model="req.purpose" placeholder="不限" clearable>
+			<el-select v-model="req.purpose">
 				<el-option v-for="item in money_use_list" :key="item.id" :label="item.name" :value="item.id">
 				</el-option>
 			</el-select>
@@ -69,7 +69,7 @@
 					pagesize:10,
 					finished_time_start:"",
 					finished_time_end:"",
-					money_use:"0",
+					purpose:"0",
 				},				//请求参数
 				date:[],		//入账时间
 				money_use_list:[{

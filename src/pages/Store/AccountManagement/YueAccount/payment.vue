@@ -2,7 +2,8 @@
 	<div>
 		<el-form :inline="true" size="small" class="demo-form-inline">
 			<el-form-item label="付款账户：">
-				<el-select v-model="req.pay_method" placeholder="不限" clearable>
+				<el-select v-model="req.pay_method">
+					<el-option label="不限" value=""></el-option>
 					<el-option label="银行卡" value="1"></el-option>
 					<el-option label="支付宝" value="2"></el-option>
 				</el-select>
@@ -11,7 +12,8 @@
 				<el-input v-model="req.bill_id" placeholder="请输入"></el-input>
 			</el-form-item>
 			<el-form-item label="收款账户：">
-				<el-select v-model="req.receive_method" placeholder="不限" clearable>
+				<el-select v-model="req.receive_method">
+					<el-option label="不限" value=""></el-option>
 					<el-option label="银行卡" value="1"></el-option>
 					<el-option label="支付宝" value="2"></el-option>
 				</el-select>

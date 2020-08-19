@@ -20,19 +20,20 @@ let path = {
 	orderDetail:'order/detail',									//订单详情
 	adjustList:'order/adjustlist',								//调单记录
 	adjustDetail:'order/adjustdetail',							//调单记录详情
+	adjustcheck:'order/adjustcheck',							//审核调单记录
 	storeInfo:'store/getstoreinfo',								//商铺信息
 	withdraw:'storebill/withdraw',								//提现
 	rechargeRecord:'storebill/rechargerecord',					//充值记录
 	transFerrecord:'storebill/transferrecord',					//转账付款、转账收款账户
 	serviceChargeRecord:'storebill/servicechargerecord',		//服务费记录
 	invoiceCategoryList:'invoicecategory/index',				//发票类目列表
-	startStop:'invoicecategory/catestartstop',						//操作发票起停用
-	editInvoiceCategory:'invoicecategory/editcategory',					//编辑发票类目
-	createInvoice:'invoicecategory/addcategory',						//新增发票类目
+	startStop:'invoicecategory/catestartstop',					//操作发票起停用
+	editInvoiceCategory:'invoicecategory/editcategory',			//编辑发票类目
+	createInvoice:'invoicecategory/addcategory',				//新增发票类目
 	applyList:'invoice/applylist',								//发票记录列表
 	applyDetail:'invoice/detail',								//发票详情
 	invoiceList:'invoice/invoicelist',							//已开发票列表
-	invoiceInput:'invoice/inputcode',								//发票单号录入
+	invoiceInput:'invoice/inputcode',							//发票单号录入
 	userList:'user/userlist',									//签约用户列表
 	getInfo:'user/getuserinfo',									//获取签约用户信息
 	receiveRecord:'user/receiverecord',							//用户收款记录
@@ -98,6 +99,10 @@ export default{
 	//登录
 	login(params){
 		return http.post(path.login, params)
+	},
+	//验证登录
+	checkLogin(params){
+		return http.get(path.login, params)
 	},
 	//退出登录
 	quit(params){
@@ -170,6 +175,10 @@ export default{
 	//调单记录详情
 	adjustDetail(params){
 		return http.get(path.adjustDetail, params)
+	},
+	//审核调单记录
+	adjustcheck(params){
+		return http.post(path.adjustcheck, params)
 	},
 	//商铺详情
 	storeInfo(params){

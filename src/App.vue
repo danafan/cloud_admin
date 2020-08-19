@@ -5,6 +5,7 @@
 </template>
 
 <script>
+  import resource from './api/resource.js'
   export default {
     provide () {
       return {
@@ -19,7 +20,13 @@
     created(){
       let tab = sessionStorage.getItem("tab");
       if(!tab || tab == '/'){
-        this.$router.push('/trade_order')
+        resource.checkLogin().then(res => {
+          if(res.data.code != 10000){
+            this.$router.push('/trade_order')
+          }else{
+            this.$message.warning(res.data.msg)
+          }
+        })
       }
     },
     methods: {

@@ -44,7 +44,6 @@
 					</el-option>
 				</el-select>
 			</el-form-item>
-
 		</el-form>
 		<div class="but">
 			<el-button type="primary" size="small" @click="getList">搜索</el-button>
@@ -91,6 +90,7 @@
 			<el-table-column fixed="right" label="操作" align="center">
 				<template slot-scope="scope">
 					<el-button type="text" size="small" @click="getDetail(scope.row.adjust_id)">详情</el-button>
+					<el-button type="text" size="small" @click="performAudit" v-if="scope.row.audit_status == 0">审核</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -107,6 +107,24 @@
 		</el-pagination>
 	</div>
 </el-card>
+<!-- 审核 -->
+<el-dialog title="审核" :visible.sync="showAudit">
+	<el-form size="small" style="width: 60%;margin: 0 auto">
+		<el-form-item label="审核结论：" required>
+			<el-select v-model="auditReq.audit_result">
+				<el-option v-for="item in audit_result_list" :key="item.id" :label="item.name" :value="item.id">
+				</el-option>
+			</el-select>
+		</el-form-item>
+		<el-form-item label="审核结论说明：" required>
+			<el-input type="textarea" :row="3" :maxlength="150" v-model="auditReq.audit_result_desc" placeholder="审核结论说明"></el-input>
+		</el-form-item>
+	</el-form>
+	<div slot="footer" class="dialog-footer">
+		<el-button @click="showAudit = false">取 消</el-button>
+		<el-button type="primary" @click="subAudit">确 定</el-button>
+	</div>
+</el-dialog>
 </div>
 </template>
 <style lang="less" scoped>
@@ -168,8 +186,20 @@
 					id:"3",
 					name:"风险存疑"
 				}],					//订单状态
+				audit_result_list:[{
+					id:"1",
+					name:"风险成立"
+				},{
+					id:"2",
+					name:"风险排除"
+				}],
 				date:[],	//订单创建时间
 				dataObj:{},	
+				showAudit:false,
+				auditReq:{
+					audit_result:'1',
+					audit_result_desc:""
+				}
 				
 			}
 		},
@@ -223,9 +253,32 @@
 				//获取列表
 				this.getList();
 			},
-			//操作
+			//详情
 			getDetail(id){
 				this.$router.push("/single_detail?adjust_id=" + id);
+			},
+			//审核
+			performAudit(){
+				this.showAudit = true;
+				this.auditReq = {
+					audit_result:'1',
+					audit_result_desc:""
+				}
+			},
+			// 确认审核
+			subAudit(){
+				if(this.auditReq.audit_result_desc == '' ){
+					this.$message.warning("请输入审核结论说明");
+				}else{
+					resource.adjustcheck(this.auditReq).then(res => {
+						if(res.data.code == 1){
+							//获取列表
+							this.getList();
+						}else{
+							this.$message.warning(res.data.msg);
+						}
+					});
+				}
 			}
 		},
 		filters:{
