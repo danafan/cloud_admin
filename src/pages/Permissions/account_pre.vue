@@ -22,7 +22,7 @@
 				</el-form-item>
 			</el-form>
 			<div class="huajian">
-				<el-button type="primary" size="small" icon="el-icon-upload" @click="create">创建</el-button>
+				<el-button type="primary" size="small" icon="el-icon-upload" @click="create" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.add == 1)">创建</el-button>
 				<div class="but">
 					<el-button type="primary" size="small" @click="getList">搜索</el-button>
 					<el-button type="primary" size="small" @click="reset">重置</el-button>
@@ -44,8 +44,8 @@
 				</el-table-column>
 				<el-table-column fixed="right" label="操作" align="center">
 					<template slot-scope="scope">
-						<el-button type="text" size="small" @click="edit(scope.row.admin_id)" v-if="scope.row.is_disabled == '1'">编辑</el-button>
-						<el-button type="text" size="small" @click="setting(scope.row.is_disabled,scope.row.admin_id)">{{scope.row.is_disabled == '1'?'禁用':'启用'}}</el-button>
+						<el-button type="text" size="small" @click="edit(scope.row.admin_id)" v-if="scope.row.is_disabled == '1' && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.edit == 1))">编辑</el-button>
+						<el-button type="text" size="small" @click="setting(scope.row.is_disabled,scope.row.admin_id)" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.startstop == 1)">{{scope.row.is_disabled == '1'?'禁用':'启用'}}</el-button>
 					</template>
 				</el-table-column>
 			</el-table>

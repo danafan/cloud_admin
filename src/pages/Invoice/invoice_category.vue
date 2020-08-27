@@ -15,7 +15,7 @@
 			<div class="but">
 				<el-button type="primary" size="small" @click="getList">搜索</el-button>
 				<el-button type="primary" size="small" @click="reset">重置</el-button>
-				<el-button type="primary" size="small" @click="createIn">新建</el-button>
+				<el-button type="primary" size="small" @click="createIn" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.add == 1)">新建</el-button>
 			</div>
 			<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
 				<el-table-column width="180" prop="cate_name" label="发票类目" align="center">
@@ -29,8 +29,8 @@
 				</el-table-column>
 				<el-table-column width="150" label="操作" align="center">
 					<template slot-scope="scope">
-						<el-button type="text" size="small" @click="setting(scope.row.status,scope.row.invoice_cate_id)">{{scope.row.status == 1?'停用':'启用'}}</el-button>
-						<el-button v-if="scope.row.status == 1" type="text" size="small" @click="getUpdateInfo(scope.row.invoice_cate_id,scope.row.cate_name,scope.row.remarks)">编辑</el-button>
+						<el-button type="text" size="small" @click="setting(scope.row.status,scope.row.invoice_cate_id)" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.startstop == 1)">{{scope.row.status == 1?'停用':'启用'}}</el-button>
+						<el-button v-if="scope.row.status == 1 && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.startstop == 1))" type="text" size="small" @click="getUpdateInfo(scope.row.invoice_cate_id,scope.row.cate_name,scope.row.remarks)">编辑</el-button>
 					</template>
 				</el-table-column>
 			</el-table>

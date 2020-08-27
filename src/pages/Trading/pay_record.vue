@@ -56,11 +56,6 @@
 					<span>{{scope.row.status | orderStatus(order_status)}}</span>
 				</template>
 			</el-table-column>
-			<el-table-column fixed="right" label="操作" align="center">
-				<template slot-scope="scope">
-					<el-button type="text" size="small" @click="setting(scope.row.batch_id)">详情</el-button>
-				</template>
-			</el-table-column>
 		</el-table>
 		<div class="page">
 			<el-pagination
@@ -177,10 +172,6 @@
 				//获取列表
 				this.getList();
 			},
-			//操作
-			setting(id){
-				this.$router.push('/money_detail?batch_id=' + id);
-			}
 		},
 		filters:{
 			orderStatus:function(v,s){

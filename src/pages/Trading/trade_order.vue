@@ -249,12 +249,12 @@
 			handleSizeChange(val) {
 				this.req.pagesize = val;
 				//获取列表
-				this.getList();
+				this.orderList();
 			},
 			handleCurrentChange(val) {
 				this.req.page = val;
 				//获取列表
-				this.getList();
+				this.orderList();
 			}
 		},
 		filters:{

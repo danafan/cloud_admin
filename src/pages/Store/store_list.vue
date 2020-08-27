@@ -16,7 +16,7 @@
 				<el-button type="primary" size="small" @click="getList">搜索</el-button>
 				<el-button type="primary" size="small" @click="reset">重置</el-button>
 			</div>
-			<el-button style="margin-bottom: 10px" type="primary" size="small" @click="create_store">创建商户</el-button>
+			<el-button style="margin-bottom: 10px" type="primary" size="small" @click="create_store" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.startstop == 1)">创建商户</el-button>
 			<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
 				<el-table-column width="150" prop="store_name" label="商户名称" align="center">
 				</el-table-column>
@@ -45,10 +45,10 @@
 				</el-table-column>
 				<el-table-column width="200" fixed="right" label="操作" align="center">
 					<template slot-scope="scope">
-						<el-button type="text" size="small" @click="look(scope.row.store_id)" v-if="scope.row.status == '1'">查看账户</el-button>
-						<el-button type="text" size="small" @click="editStore(scope.row.store_id)" v-if="scope.row.status == '1' || scope.row.status == '2'">{{scope.row.status == '2'?'去完善':'修改'}}
+						<el-button type="text" size="small" @click="look(scope.row.store_id)" v-if="scope.row.status == '1' && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.detail == 1))">查看账户</el-button>
+						<el-button type="text" size="small" @click="editStore(scope.row.store_id)" v-if="scope.row.status == '1' || scope.row.status == '2' && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.edit == 1))">{{scope.row.status == '2'?'去完善':'修改'}}
 						</el-button>
-						<el-button type="text" size="small" @click="setting(scope.row.status,scope.row.store_id)" v-if="scope.row.status == 0 || scope.row.status == 1">{{scope.row.status == 1?'停用':'启用'}}</el-button>
+						<el-button type="text" size="small" @click="setting(scope.row.status,scope.row.store_id)" v-if="scope.row.status == 0 || scope.row.status == 1 && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.startstop == 1))">{{scope.row.status == 1?'停用':'启用'}}</el-button>
 					</template>
 				</el-table-column>
 			</el-table>

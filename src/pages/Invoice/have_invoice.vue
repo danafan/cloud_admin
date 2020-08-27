@@ -25,7 +25,7 @@
 		</el-form>
 		<div class="but">
 			<el-button type="primary" size="small" @click="applyList">搜索</el-button>
-			<el-button type="primary" size="small" @click="exportFile">导出</el-button>
+			<el-button type="primary" size="small" @click="exportFile" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.export == 1)">导出</el-button>
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
 		</div>
 		<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">

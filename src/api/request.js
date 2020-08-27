@@ -1,5 +1,6 @@
 import axios from './index'
 import md5 from 'js-md5';
+import { Message } from 'element-ui';
 
 export default {
   post(path, params={}){
@@ -41,7 +42,7 @@ export default {
      let sign = md5(str);
 
      form.append('sign', sign);
-    console.log(params)
+     console.log(params)
      return axios.post(`${path}`, form);
    },
    get(path, params={}){
@@ -65,7 +66,11 @@ export default {
     let arrSort = arr.sort();
     for(let b of arrSort){
       let val = params[b];
-        str += `${b}=${val}&`;
+      str += `${b}=${val}&`;
+    }
+    if(str.indexOf("#") != -1){
+      Message({message:'参数不能包含特殊字符（#、%、¥）等',type:'warning'})
+      return false;
     }
     let secret = `secret_key=${secret_key}`;
     let sign = md5(str + secret);

@@ -9,10 +9,10 @@
 				</div>
 			</div>
 			<div class="info_row">
-				充值到账提醒：{{storeInfoObj.recharge_notice_type == '1'?'短信通知':storeInfoObj.recharge_notice_type == '2'?'邮件通知':'短信和邮件通知'}}
+				充值到账提醒：{{storeInfoObj.recharge_notice_type == 1?'短信通知':storeInfoObj.recharge_notice_type == 2?'邮件通知':'短信和邮件通知'}}
 			</div>
 			<div class="info_row">
-				商户余额提醒：{{storeInfoObj.balance_notice_type == '1'?'短信通知':storeInfoObj.balance_notice_type == '2'?'邮件通知':'短信和邮件通知'}}
+				商户余额提醒：{{storeInfoObj.balance_notice_type == 1?'短信通知':storeInfoObj.balance_notice_type == 2?'邮件通知':'短信和邮件通知'}}
 			</div>
 			<div class="info_row">
 				银行卡余额提醒阈值（元）：{{storeInfoObj.bank_limit}}
@@ -184,7 +184,11 @@
 			getStoreInfo(){
 				resource.getremind({store_id:this.store_id}).then(res => {
 					if(res.data.code == 1){
-						this.storeInfoObj = res.data.data;
+						if(res.data.data.length == 0){
+							this.storeInfoObj = this.editObj;
+						}else{
+							this.storeInfoObj = res.data.data;
+						}
 					}else{
 						this.$message.warning(res.data.msg);
 					}
@@ -195,10 +199,12 @@
 				resource.addEditRemindGet({store_id:this.store_id}).then(res => {
 					if(res.data.code == 1){
 						this.showEdit = true;
-						for (var key1 in this.editObj) {
-							for (var key2 in res.data.data.info) {
-								if(key1 == key2){
-									this.editObj[key1] = res.data.data.info[key2]
+						if(res.data.data.info.length != 0){
+							for (var key1 in this.editObj) {
+								for (var key2 in res.data.data.info) {
+									if(key1 == key2){
+										this.editObj[key1] = res.data.data.info[key2]
+									}
 								}
 							}
 						}

@@ -18,16 +18,18 @@
       }
     },
     created(){
-      let tab = sessionStorage.getItem("tab");
-      if(!tab || tab == '/'){
-        resource.checkLogin().then(res => {
-          if(res.data.code != 10000){
+      resource.checkLogin().then(res => {
+        if(res.data.code != 10000){
+          let tab = sessionStorage.getItem("tab");
+          if(!tab || tab == '/'){
             this.$router.push('/trade_order')
           }else{
-            this.$message.warning(res.data.msg)
+            this.$router.push(tab)
           }
-        })
-      }
+        }else{
+          this.$message.warning(res.data.msg)
+        }
+      })
     },
     methods: {
       reload () {

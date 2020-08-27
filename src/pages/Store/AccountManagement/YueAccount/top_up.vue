@@ -24,22 +24,22 @@
 		<el-button type="primary" size="small" @click="reset">重置</el-button>
 	</div>
 	<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
-		<el-table-column width="150" prop="finished_time" label="入账时间" align="center">
+		<el-table-column prop="finished_time" label="入账时间" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="service_subject_name" label="综合服务主体" align="center">
+		<el-table-column prop="service_subject_name" label="综合服务主体" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="bill_id" label="充值流水号" align="center">
+		<el-table-column prop="bill_id" label="充值流水号" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="money" label="充值金额（元）" align="center">
+		<el-table-column prop="money" label="充值金额（元）" align="center">
 		</el-table-column>
-		<el-table-column width="150" prop="reality_money" label="实际到账金额（元）" align="center">
+		<el-table-column prop="reality_money" label="实际到账金额（元）" align="center">
 		</el-table-column>
-		<el-table-column width="150" label="充值类型" align="center">
+		<el-table-column label="充值类型" align="center">
 			<template slot-scope="scope">
-				<span>{{scope.row.business_type2 | orderStatus(money_use_list)}}</span>
+				<span>线下充值</span>
 			</template>
 		</el-table-column>
-		<el-table-column width="150" prop="recharge_type" label="资金用途" align="center">
+		<el-table-column prop="recharge_type" label="资金用途" align="center">
 		</el-table-column>
 	</el-table>
 	<div class="page">

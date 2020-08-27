@@ -10,7 +10,7 @@
 				<el-button type="primary" size="small" @click="getList">搜索</el-button>
 				<el-button type="primary" size="small" @click="reset">重置</el-button>
 			</div>
-			<el-button style="margin-bottom: 10px" type="primary" size="small" @click="create_store">创建关联</el-button>
+			<el-button style="margin-bottom: 10px" type="primary" size="small" @click="create_store" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.add == 1)">创建关联</el-button>
 			<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
 				<el-table-column width="500" prop="name" label="关联商户" align="center">
 				</el-table-column>
@@ -18,8 +18,8 @@
 				</el-table-column>
 				<el-table-column fixed="right" label="操作" align="center">
 					<template slot-scope="scope">
-						<el-button type="text" size="small" @click="deleteAss(scope.row.relation_id)">删除</el-button>
-						<el-button type="text" size="small" @click="edit(scope.row.relation_id)">编辑</el-button>
+						<el-button type="text" size="small" @click="deleteAss(scope.row.relation_id)"v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.del == 1)">删除</el-button>
+						<el-button type="text" size="small" @click="edit(scope.row.relation_id)"v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.edit == 1)">编辑</el-button>
 					</template>
 				</el-table-column>
 			</el-table>

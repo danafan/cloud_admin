@@ -47,7 +47,7 @@
 			<template slot-scope="scope">
 				<div v-for="item in scope.row.sign_info">
 					{{item.service_subject_name}}（{{item.sign_status_desc}}）
-					<el-button type="text" size="small" @click="termination(scope.row.user_id,item.service_subject_id)" v-if="item.sign_status == 2">解约</el-button>
+					<el-button type="text" size="small" @click="termination(scope.row.user_id,item.service_subject_id)" v-if="item.sign_status == 2 && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.cancelcontract == 1))">解约</el-button>
 				</div>
 			</template>
 		</el-table-column>
@@ -63,7 +63,7 @@
 		</el-table-column>
 		<el-table-column fixed="right" label="操作" align="center">
 			<template slot-scope="scope">
-				<el-button type="text" size="small" @click="getDetail(scope.row.user_id)">查看</el-button>
+				<el-button type="text" size="small" @click="getDetail(scope.row.user_id)" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.detail == 1)">查看</el-button>
 			</template>
 		</el-table-column>
 	</el-table>

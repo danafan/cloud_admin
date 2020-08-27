@@ -5,12 +5,11 @@
 				<el-form-item label="税款属期：">
 					<el-date-picker
 					v-model="date"
-					type="datetimerange"
-					value-format="yyyy-MM-dd HH:mm:ss"
+					type="daterange"
+					value-format="yyyy-MM-dd"
 					range-separator="至"
-					start-placeholder="开始时间"
-					end-placeholder="结束时间"
-					:default-time="['00:00:00', '23:59:59']">
+					start-placeholder="开始日期"
+					end-placeholder="结束日期">
 				</el-date-picker>
 			</el-form-item>
 			<el-form-item label="商户名称：">
@@ -20,7 +19,7 @@
 		<div class="but">
 			<el-button type="primary" size="small" @click="getList">搜索</el-button>
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
-			<el-button type="primary" size="small" @click="getStorelist">上传文件</el-button>
+			<el-button type="primary" size="small" @click="getStorelist" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.upload == 1)">上传文件</el-button>
 		</div>
 		<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
 			<el-table-column width="150" prop="store_name" label="商户名称" align="center">

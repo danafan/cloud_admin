@@ -81,14 +81,6 @@
 				<div style="color: red" v-if="scope.row.order_status1 == 2 || scope.row.order_status1 == 3">{{scope.row.status_desc}}</div>
 			</template>
 		</el-table-column>
-		<el-table-column fixed="right" label="操作" align="center">
-			<template slot-scope="scope">
-				<el-button v-if="judgeQu(scope.row)" type="text" size="small" @click="cancel(scope.row.order_id)">取消打款</el-button>
-				<el-button v-if="judgeInfo(scope.row)" type="text" size="small" @click="getUpdateInfo(scope.row.order_id)">修改信息</el-button>
-				<el-button v-if="judgeMoney(scope.row)" type="text" size="small" @click="getUpdateMoney(scope.row.order_id)">修改金额</el-button>
-				<el-button v-if="judgeDetail(scope.row)" type="text" size="small" @click="getDetail(scope.row.order_id)">详情</el-button>
-			</template>
-		</el-table-column>
 	</el-table>
 	<div class="page">
 		<el-pagination
@@ -103,45 +95,6 @@
 	</el-pagination>
 </div>
 </el-card>
-<!-- 修改信息 -->
-<el-dialog title="修改信息" :visible.sync="updateInfo">
-	<el-form size="small" style="width: 60%;margin: 0 auto">
-		<el-form-item label="姓名" label-width="180px" required>
-			<el-input v-model="updateInfoReq.name"></el-input>
-		</el-form-item>
-		<el-form-item label="收款账号" label-width="180px" required>
-			<el-input v-model="updateInfoReq.id_card_no"></el-input>
-		</el-form-item>
-		<el-form-item label="证件号码" label-width="180px" required>
-			<el-input v-model="updateInfoReq.bank_card_no"></el-input>
-		</el-form-item>
-	</el-form>
-	<div slot="footer" class="dialog-footer">
-		<el-button @click="updateInfo = false">取 消</el-button>
-		<el-button type="primary" @click="subUpdateInfo">确 定</el-button>
-	</div>
-</el-dialog>
-<!-- 修改金额 -->
-<el-dialog title="修改金额" :visible.sync="updateMoney">
-	<el-form size="small" style="width: 60%;margin: 0 auto">
-		<el-form-item label="全网单人月累计金额限制(元)：" required>
-			<span>10000</span>
-		</el-form-item>
-		<el-form-item label="本月已打款金额（元）：" required>
-			<span>10000</span>
-		</el-form-item>
-		<el-form-item label="本月可打款金额（元）：" required>
-			<span>10000</span>
-		</el-form-item>
-		<el-form-item label="打款金额" label-width="180px" required>
-			<el-input v-model="updateMoneyReq.pay_money"></el-input>
-		</el-form-item>
-	</el-form>
-	<div slot="footer" class="dialog-footer">
-		<el-button @click="updateMoney = false">取 消</el-button>
-		<el-button type="primary" @click="subUpdateMoney">确 定</el-button>
-	</div>
-</el-dialog>
 </div>
 </template>
 <style lang="less" scoped>
@@ -194,17 +147,6 @@
 				order_create_date:[],	//订单创建时间
 				update_date:[],			//最后更新时间
 				dataObj:{},	
-				updateInfo:false,		//默认修改信息弹框不显示
-				updateInfoReq:{
-					name:"",
-					id_card_no:"",
-					bank_card_no:""
-				},						//修改信息
-				updateMoney:false,		//默认修改金额不显示
-				updateMoneyReq:{
-					pay_money:""
-				},						//修改打款金额
-				order_id:""
 				
 			}
 		},
@@ -261,119 +203,7 @@
 				this.req.page = val;
 				//获取列表
 				this.getList();
-			},
-			//取消打款
-			judgeQu(item){
-				if(item.order_status1 == 1){
-					return true;
-				}else if(item.order_status1 == 2 && item.order_status2 == 5 && item.batch_status == 0){
-					return true;
-				}else if(item.order_status1 == 3 && item.order_status2 == 2 && item.batch_status == 0){
-					return true;
-				}else{
-					return false;
-				}
-			},
-			//修改信息
-			judgeInfo(item){
-				if(item.order_status1 == 3 && item.order_status2 == 1 && item.batch_status == 0){
-					return true;
-				}else{
-					return false;
-				}
-			},
-			//修改金额
-			judgeMoney(item){
-				if(item.order_status1 == 3 && item.order_status2 == 2 && item.batch_status == 0){
-					return true;
-				}else{
-					return false;
-				}
-			},
-			//详情
-			judgeDetail(item){
-				if(item.order_status1 == 2 || item.order_status1 == 6 && item.order_status1 == 8){
-					return true;
-				}else{
-					return false;
-				}
-			},
-			//取消打款
-			cancel(order_id){
-				this.$confirm('确认取消该订单打款?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					resource.cancel({order_id:order_id}).then(res => {
-						if(res.data.code == 1){
-							this.$message.success(res.data.msg);
-							//获取列表
-							this.getList();
-						}else{
-							this.$message.warning(res.data.msg);
-						}
-					})
-				}).catch(() => {
-					this.$message({
-						type: 'info',
-						message: '取消'
-					});          
-				});
-			},
-			//修改信息
-			getUpdateInfo(order_id){
-				this.order_id = order_id;
-				this.updateInfo = true;
-			},
-			//提交修改信息
-			subUpdateInfo(){
-				let req = this.updateInfoReq;
-				if(req.name == ''){	
-					this.$message.warning("请输入收款户名");
-				}else if(req.id_card_no == ''){	
-					this.$message.warning("请输入证件号码");
-				}else if(req.bank_card_no == ''){	
-					this.$message.warning("请输入收款账号");
-				}else{
-					req.order_id = this.order_id;
-					resource.editOrder(req).then(res => {
-						if(res.data.code == 1){
-							this.$message.success(res.data.msg);
-							//获取列表
-							this.getList();
-						}else{
-							this.$message.warning(res.data.msg);
-						}
-					})
-				}
-			},
-			//修改金额
-			getUpdateMoney(order_id){
-				this.order_id = order_id;
-				this.updateMoney = true;
-			},
-			//提交修改金额
-			subUpdateMoney(){
-				let req = this.updateMoneyReq;
-				if(req.pay_money == ''){	
-					this.$message.warning("请输入打款金额");
-				}else{
-					resource.editPayMoney(req).then(res => {
-						if(res.data.code == 1){
-							this.$message.success(res.data.msg);
-							//获取列表
-							this.getList();
-						}else{
-							this.$message.warning(res.data.msg);
-						}
-					})
-				}
-			},
-			//详情
-			getDetail(order_id){
-				this.$router.push('/order_detail?order_id=' + order_id);
-			}
+			},			
 		},
 		filters:{
 			orderStatus:function(v,s){

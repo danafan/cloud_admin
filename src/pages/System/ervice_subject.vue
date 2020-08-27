@@ -1,11 +1,9 @@
 <template>
 	<div>
 		<el-card>
-			<el-button type="primary" size="small" @click="create">新建</el-button>
-			<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
+			<el-button type="primary" size="small" @click="create" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.add == 1)">新建</el-button>
+			<el-table :data="dataObj.data" border style="width: 100%;margin-top: 20px" :header-cell-style="{'background':'#f4f4f4'}">
 				<el-table-column width="150" prop="name" label="综合服务主体" align="center">
-				</el-table-column>
-				<el-table-column width="200" prop="enterprise_name" label="企业名称" align="center">
 				</el-table-column>
 				<el-table-column width="150" prop="operator" label="经办人姓名" align="center">
 				</el-table-column>
@@ -13,15 +11,13 @@
 				</el-table-column>
 				<el-table-column width="200" prop="enterprise_no" label="统一社会信用代码" align="center">
 				</el-table-column>
-				<el-table-column width="300" prop="sign_protocol_name" label="协议文件" align="center">
+				<el-table-column prop="sign_protocol_name" label="协议文件" align="center">
 				</el-table-column>
-				<el-table-column width="200" prop="sign_enterprises" label="签约企业名称" align="center">
 				</el-table-column>
 				<el-table-column width="150" label="操作" align="center" fixed="right">
 					<template slot-scope="scope">
-						<el-button type="text" size="small" @click="edit(scope.row.id)" v-if="scope.row.info_status == 3">编辑</el-button>
-						<el-button type="text" size="small" @click="look(scope.row.id)" v-if="scope.row.info_status == 3">查看签约企业</el-button>
-						<el-button type="text" size="small" @click="perfect(scope.row.id,scope.row.info_status)" v-else>去完善</el-button>
+						<el-button type="text" size="small" @click="edit(scope.row.id)" v-if="scope.row.info_status == 3 && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.edit == 1))">编辑</el-button>
+						<el-button type="text" size="small" @click="look(scope.row.id)" v-if="scope.row.info_status == 3 && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.detail == 1))">查看签约企业</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -306,21 +302,6 @@
 				this.fileName = "";
 				this.type = "1";	
 				this.step = 1;		
-			},
-			//去完善
-			perfect(id,info_status){
-				this.stepReq2 = {
-					operator:"",
-					operator_id_card:""
-				},
-				this.stepReq3 = {
-					sign_protocol:{}
-				},
-				this.showEdit = true;
-				this.fileName = "";
-				this.type = "1";
-				this.id= id;
-				this.step = info_status + 1;
 			},
 			//下一步
 			next(){

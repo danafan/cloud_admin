@@ -89,8 +89,8 @@
 			</el-table-column>
 			<el-table-column fixed="right" label="操作" align="center">
 				<template slot-scope="scope">
-					<el-button type="text" size="small" @click="getDetail(scope.row.adjust_id)">详情</el-button>
-					<el-button type="text" size="small" @click="performAudit" v-if="scope.row.audit_status == 0">审核</el-button>
+					<el-button type="text" size="small" @click="getDetail(scope.row.adjust_id)" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.detail == 1)">详情</el-button>
+					<el-button type="text" size="small" @click="performAudit" v-if="scope.row.audit_status == 0 && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.verify == 1))">审核</el-button>
 				</template>
 			</el-table-column>
 		</el-table>

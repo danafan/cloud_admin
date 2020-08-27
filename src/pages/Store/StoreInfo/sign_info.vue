@@ -142,7 +142,7 @@
 					<el-input v-model="item.identity_card" size="small"></el-input>
 				</el-form-item>
 				<div class="add" v-if="index == black_list.length - 1" @click="add(index)">添加</div>
-				<div class="delete" @click="deleteBlack(index)" v-if="black_list.length > 1 && index != black_list.length - 1">删除</div>
+				<div class="delete" @click="deleteBlack(index)" v-if="black_list.length > 1">删除</div>
 			</div>
 		</el-form>
 		<div slot="footer" class="dialog-footer">
@@ -294,7 +294,7 @@
 			},
 			// 添加
 			add(index){
-				if(this.black_list[index].username == '' || this.black_list[index].identity_card == ''){
+				if(this.black_list[index].username == '' && this.black_list[index].identity_card == ''){
 					this.$message.warning("请完善当前条目!");
 				}else{
 					let obj = {
@@ -318,8 +318,16 @@
 					this.$message.warning("请输入正确的费率格式");
 				}else{
 					this.req.store_id = this.store_id;
-					if(this.black_list[0].username != '' && this.black_list[0].identity_card != ''){
-						this.req.black_list = JSON.stringify(this.black_list);
+					var arr = [];
+					this.black_list.map(item => {
+						if(item.username != '' || item.identity_card != ''){
+							arr.push(item);
+						}
+					})
+					if(arr.length == 0){
+						this.req.black_list = ''
+					}else{
+						this.req.black_list = JSON.stringify(arr);
 					}
 					resource.addEditSubPost(this.req).then(res => {
 						if(res.data.code == 1){

@@ -17,7 +17,7 @@
 		<div class="but">
 			<el-button type="primary" size="small" @click="search">搜索</el-button>
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
-			<el-button type="primary" size="small" @click="create">创建</el-button>
+			<el-button type="primary" size="small" @click="create" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.add == 1)">创建</el-button>
 		</div>
 		<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
 			<el-table-column width="300" prop="created_time" label="日期" align="center">
@@ -28,7 +28,7 @@
 			</el-table-column>
 			<el-table-column width="150" label="操作" align="center">
 				<template slot-scope="scope">
-					<el-button type="text" size="small" @click="orderDetail(scope.row.notice_id)">查看</el-button>
+					<el-button type="text" size="small" @click="orderDetail(scope.row.notice_id)"  v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.detail == 1)">查看</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
