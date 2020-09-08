@@ -89,14 +89,14 @@
 					<div class="itemText">用户姓名：{{userInfo.name}}</div>
 					<div class="itemText">预签约手机号：{{userInfo.phone}}</div>
 					<div class="itemText">身份证正面：</div>
-					<img :src="userInfo.id_card_front" class="user_card">
+					<img :src="userInfo.id_card_front" class="user_card" v-if="userInfo.id_card_no != ''">
 					<div class="itemText">是否是海外或港澳台用户：{{userInfo.overseas_user}}</div>
 				</div>
 				<div class="infoItem">
 					<div class="itemText">证件号码：{{userInfo.id_card_no}}</div>
 					<div class="itemText">银行卡号：{{userInfo.bank_card_no}}</div>
 					<div class="itemText">身份证反面：</div>
-					<img :src="userInfo.id_card_back" class="user_card">
+					<img :src="userInfo.id_card_back" class="user_card" v-if="userInfo.id_card_no != ''">
 					<div class="itemText">收款总额（元）：{{userInfo.receive_money}}</div>
 					<div class="itemText">
 						签约信息：

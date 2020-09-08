@@ -31,7 +31,7 @@ export default {
     obj.secret_key = secret_key;
     let str = "";
     for(var i in obj){
-      if(i != 'sign_protocol' && i != 'file'){
+      if(i != 'sign_protocol' && i != 'file' && i != 'feedback_material'){
         str += `${i}=${obj[i]}&`
       }
     }

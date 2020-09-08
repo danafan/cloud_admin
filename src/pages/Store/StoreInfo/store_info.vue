@@ -163,6 +163,12 @@
 					</el-form>
 					<div class="title">收款账户</div>
 					<el-form size="small" style="width: 100%">
+						<el-form-item label="收款银行：" label-width="220px" required>
+						<el-radio-group v-model="req.bank_flag">
+							<el-radio :label="1">农行</el-radio>
+							<el-radio :label="0">非农行</el-radio>
+						</el-radio-group>
+					</el-form-item>
 						<el-form-item label="专属账户：" label-width="220px" required>
 							<el-input v-model="req.bank_no"></el-input>
 						</el-form-item>

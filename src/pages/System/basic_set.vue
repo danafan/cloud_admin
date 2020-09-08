@@ -24,7 +24,7 @@
 		<el-card style="margin-top: 24px;">
 			<div class="info_title">
 				<div class="title_txt">限额信息</div>
-				<div class="edit_box" @click="edit">
+				<div class="edit_box" @click="edit" v-if="storeInfoObj.is_supper == 1 || (storeInfoObj.is_supper == 0 && storeInfoObj.button_list.edit == 1)">
 					<img class="edit_icon" src="../../assets/edit_icon.png">
 					<div class="edit_txt">编辑</div>
 				</div>

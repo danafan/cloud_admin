@@ -16,7 +16,7 @@
 				<el-button type="primary" size="small" @click="getList">搜索</el-button>
 				<el-button type="primary" size="small" @click="reset">重置</el-button>
 			</div>
-			<el-button style="margin-bottom: 10px" type="primary" size="small" @click="create_store" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.startstop == 1)">创建商户</el-button>
+			<el-button style="margin-bottom: 10px" type="primary" size="small" @click="create_store" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.add == 1)">创建商户</el-button>
 			<el-table :data="dataObj.data" border style="width: 100%" :header-cell-style="{'background':'#f4f4f4'}">
 				<el-table-column width="150" prop="store_name" label="商户名称" align="center">
 				</el-table-column>
@@ -46,7 +46,7 @@
 				<el-table-column width="200" fixed="right" label="操作" align="center">
 					<template slot-scope="scope">
 						<el-button type="text" size="small" @click="look(scope.row.store_id)" v-if="scope.row.status == '1' && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.detail == 1))">查看账户</el-button>
-						<el-button type="text" size="small" @click="editStore(scope.row.store_id)" v-if="scope.row.status == '1' || scope.row.status == '2' && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.edit == 1))">{{scope.row.status == '2'?'去完善':'修改'}}
+						<el-button type="text" size="small" @click="editStore(scope.row.store_id)" v-if="(scope.row.status == '1' || scope.row.status == '2') && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.edit == 1))">{{scope.row.status == '2'?'去完善':'修改'}}
 						</el-button>
 						<el-button type="text" size="small" @click="setting(scope.row.status,scope.row.store_id)" v-if="scope.row.status == 0 || scope.row.status == 1 && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.startstop == 1))">{{scope.row.status == 1?'停用':'启用'}}</el-button>
 					</template>
@@ -141,6 +141,12 @@
 				</el-form>
 				<div class="title">收款账户</div>
 				<el-form size="small" style="width: 100%">
+					<el-form-item label="收款银行：" label-width="220px" required>
+						<el-radio-group v-model="addObj.bank_flag">
+							<el-radio :label="1">农行</el-radio>
+							<el-radio :label="0">非农行</el-radio>
+						</el-radio-group>
+					</el-form-item>
 					<el-form-item label="专属账户：" type="number" label-width="220px" required>
 						<el-input v-model="addObj.bank_no"></el-input>
 					</el-form-item>
@@ -336,6 +342,7 @@
 						this.showEdit = true;
 						let resData = res.data.data;
 						this.addObj = resData.info;
+						this.addObj.bank_flag = 1;
 						this.admin_list = resData.admin_list;
 						this.service_list = resData.service_list;
 						this.domain = resData.info.domain;

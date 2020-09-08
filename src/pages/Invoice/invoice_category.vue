@@ -30,7 +30,7 @@
 				<el-table-column width="150" label="操作" align="center">
 					<template slot-scope="scope">
 						<el-button type="text" size="small" @click="setting(scope.row.status,scope.row.invoice_cate_id)" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.startstop == 1)">{{scope.row.status == 1?'停用':'启用'}}</el-button>
-						<el-button v-if="scope.row.status == 1 && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.startstop == 1))" type="text" size="small" @click="getUpdateInfo(scope.row.invoice_cate_id,scope.row.cate_name,scope.row.remarks)">编辑</el-button>
+						<el-button v-if="scope.row.status == 1 && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.edit == 1))" type="text" size="small" @click="getUpdateInfo(scope.row.invoice_cate_id,scope.row.cate_name,scope.row.remarks)">编辑</el-button>
 					</template>
 				</el-table-column>
 			</el-table>

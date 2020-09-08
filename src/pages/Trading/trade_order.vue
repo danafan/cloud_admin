@@ -105,7 +105,7 @@
 				<span>{{scope.row.order_status1 | orderStatus(order_status)}}</span>
 				<div style="color: red" v-if="scope.row.order_status1 == 2">{{scope.row.order_status2 | orderStatus2}}</div>
 				<div style="color: red" v-if="scope.row.order_status1 == 3">{{scope.row.order_status2 | orderStatus3}}</div>
-				<div style="color: red" v-if="scope.row.order_status1 == 2 || scope.row.order_status1 == 3">{{scope.row.status_desc}}</div>
+				<div style="color: red" v-if="(scope.row.order_status1 == 2 || scope.row.order_status1 == 3) && scope.row.order_status2 == 1">{{scope.row.status_desc}}</div>
 			</template>
 		</el-table-column>
 	</el-table>
@@ -271,7 +271,7 @@
 			orderStatus2:function(v){
 				switch(v){
 					case 1:
-						return '信息不匹配(锁批前可确定)'
+						return '信息不匹配'
 					case 2:
 						return '全网单人月累计打款金额超限制'
 					case 3:
@@ -287,7 +287,7 @@
 			orderStatus3:function(v){
 				switch(v){
 					case 1:
-					return '信息不匹配(锁批前可确定)'
+					return '信息不匹配'
 					case 2:
 					return '全网单人月累计打款金额超限制'
 					case 3:
