@@ -70,7 +70,8 @@
 			</el-table-column>
 			<el-table-column width="150" label="反馈材料" align="center">
 				<template slot-scope="scope">
-					<img :src="scope.row.feedback_material" style="width: 100px;height: 100px">
+					<div v-if="scope.row.feedback_material == ''">暂无</div>
+					<img :src="scope.row.feedback_material" style="width: 100px;height: 100px" v-else>
 				</template>
 			</el-table-column>
 			<el-table-column width="150" label="状态" align="center">
@@ -90,7 +91,7 @@
 			<el-table-column fixed="right" label="操作" align="center">
 				<template slot-scope="scope">
 					<el-button type="text" size="small" @click="getDetail(scope.row.adjust_id)" v-if="dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.detail == 1)">详情</el-button>
-					<el-button type="text" size="small" @click="performAudit" v-if="scope.row.audit_status == 0 && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.verify == 1))">审核</el-button>
+					<el-button type="text" size="small" @click="performAudit(scope.row.adjust_id)" v-if="(scope.row.feedback_status && scope.row.audit_status == 0) && (dataObj.is_supper == 1 || (dataObj.is_supper == 0 && dataObj.button_list.verify == 1))">审核</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -152,8 +153,8 @@
 					name:"",
 					store_name:"",
 					adjust_id:"",
-					feedback_status:"",
-					audit_status:""
+					feedback_status:"-1",
+					audit_status:"-1"
 				},				//请求参数
 				feedback_list:[
 				{
@@ -196,6 +197,7 @@
 				date:[],	//订单创建时间
 				dataObj:{},	
 				showAudit:false,
+				adjust_id:"",
 				auditReq:{
 					audit_result:'1',
 					audit_result_desc:""
@@ -258,7 +260,8 @@
 				this.$router.push("/single_detail?adjust_id=" + id);
 			},
 			//审核
-			performAudit(){
+			performAudit(adjust_id){
+				this.adjust_id = adjust_id;
 				this.showAudit = true;
 				this.auditReq = {
 					audit_result:'1',
@@ -270,8 +273,11 @@
 				if(this.auditReq.audit_result_desc == '' ){
 					this.$message.warning("请输入审核结论说明");
 				}else{
+					this.auditReq.adjust_id = this.adjust_id;
 					resource.adjustcheck(this.auditReq).then(res => {
 						if(res.data.code == 1){
+							this.$message.success(res.data.msg);
+							this.showAudit = false;
 							//获取列表
 							this.getList();
 						}else{

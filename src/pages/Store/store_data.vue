@@ -35,7 +35,7 @@
 			</el-table-column>
 			<el-table-column width="150" prop="store_success_alipay_money" label="支付宝成功订单金额（元）" align="center">
 			</el-table-column>
-			<el-table-column width="150" prop="user_return_money" label="用户成功收款金额（元）" align="center">
+			<el-table-column width="150" prop="user_total_success_money" label="用户成功收款金额（元）" align="center">
 			</el-table-column>
 			<el-table-column width="150" prop="user_success_bank_money" label="银行卡用户成功收款金额（元）" align="center">
 			</el-table-column>

@@ -88,6 +88,10 @@ let path = {
 	delaccess:'access/del',											//权限删除
 	addaccess:'access/add',											//权限添加
 	editaccess:'access/edit',										//权限修改
+	systemBankIndex:'systembank/index',								//银行卡设置首页
+	editMasterBank:'systembank/editmasterbank',						//编辑提现总卡
+	delBank:'systembank/delbank',									//删除打款卡
+	editPaybank:'systembank/editpaybank',							//编辑打款卡
 
 
 }				
@@ -467,6 +471,30 @@ export default{
 	//权限修改
 	editaccess(params){
 		return http.post(path.editaccess, params)
+	},
+	//银行卡设置首页信息
+	systemBankIndex(params){
+		return http.get(path.systemBankIndex, params)
+	},
+	//编辑体现总卡
+	editMasterBankGet(params){
+		return http.get(path.editMasterBank, params)
+	},
+	//编辑体现总卡
+	editMasterBankPost(params){
+		return http.post(path.editMasterBank, params)
+	},
+	//删除打款卡
+	delBank(params){
+		return http.post(path.delBank, params)
+	},
+	//编辑打款卡
+	editPaybankGet(params){
+		return http.get(path.editPaybank, params)
+	},
+	//编辑打款卡
+	editPaybankPost(params){
+		return http.post(path.editPaybank, params)
 	},
 }
 

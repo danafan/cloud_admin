@@ -147,6 +147,9 @@
 							<el-radio :label="0">非农行</el-radio>
 						</el-radio-group>
 					</el-form-item>
+					<el-form-item label="开户名：" type="text" label-width="220px" required>
+						<el-input v-model="addObj.open_company_name"></el-input>
+					</el-form-item>
 					<el-form-item label="专属账户：" type="number" label-width="220px" required>
 						<el-input v-model="addObj.bank_no"></el-input>
 					</el-form-item>
@@ -429,6 +432,8 @@
 					this.$message.warning("请输入邮箱");
 				}else if(this.addObj.store_admin_name == ''){
 					this.$message.warning("请输入姓名");
+				}else if(this.addObj.open_company_name == ''){
+					this.$message.warning("请输入开户名");
 				}else if(this.addObj.bank_no == ''){
 					this.$message.warning("请输入专属账户");
 				}else if(this.addObj.open_bank_account == ''){
